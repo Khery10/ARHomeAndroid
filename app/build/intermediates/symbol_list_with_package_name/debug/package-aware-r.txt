@@ -758,6 +758,7 @@ color switch_thumb_normal_material_dark
 color switch_thumb_normal_material_light
 color tooltip_background_dark
 color tooltip_background_light
+color white
 dimen abc_action_bar_content_inset_material
 dimen abc_action_bar_content_inset_with_nav
 dimen abc_action_bar_default_height_material
@@ -1170,6 +1171,7 @@ id action_menu_presenter
 id action_mode_bar
 id action_mode_bar_stub
 id action_mode_close_button
+id action_permissions_fragment_to_menuFragment
 id action_permissions_to_selector
 id action_selector_to_camera
 id action_text
@@ -1189,6 +1191,8 @@ id buttonPanel
 id camera_fragment
 id cancel_action
 id capture_button
+id catalog
+id category
 id center
 id center_horizontal
 id center_vertical
@@ -1239,6 +1243,7 @@ id group_divider
 id groups
 id home
 id homeAsUp
+id horizontal_scroll_header
 id icon
 id icon_group
 id ifRoom
@@ -1257,6 +1262,7 @@ id listMode
 id list_item
 id masked
 id media_actions
+id menuFragment
 id message
 id middle
 id mini
@@ -1291,6 +1297,7 @@ id radio
 id right
 id right_icon
 id right_side
+id roomSets
 id save_image_matrix
 id save_non_transition_alpha
 id save_scale_type
@@ -1451,6 +1458,7 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_password_icon
 layout fragment_camera
+layout fragment_catalogs
 layout fragment_sliding
 layout mtrl_layout_snackbar
 layout mtrl_layout_snackbar_include
@@ -1721,6 +1729,7 @@ style Base_Widget_MaterialComponents_TextInputLayout
 style CardView
 style CardView_Dark
 style CardView_Light
+style MenuTextHeader
 style Platform_AppCompat
 style Platform_AppCompat_Light
 style Platform_MaterialComponents

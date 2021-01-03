@@ -24,6 +24,12 @@
         <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
+    <style name="MenuTextHeader">
+        <item name="android:textSize">25sp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+    </style>
+
 
 
 </resources>

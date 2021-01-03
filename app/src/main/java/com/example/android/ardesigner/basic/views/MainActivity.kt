@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import com.example.android.ardesigner.basic.R
 import com.example.android.ardesigner.basic.views.fragments.CameraActivity
 import com.example.android.camera.utils.sliding.SlidingImageManager
 
@@ -20,6 +21,6 @@ class MainActivity : AppCompatActivity() {
                 slidingManager.onDestroy()
                 finish()
             }
-        }, 20000)
+        }, 5000)
     }
 }

@@ -13,4 +13,9 @@ public class PermissionsFragmentDirections {
   public static NavDirections actionPermissionsToSelector() {
     return new ActionOnlyNavDirections(R.id.action_permissions_to_selector);
   }
+
+  @NonNull
+  public static NavDirections actionPermissionsFragmentToMenuFragment() {
+    return new ActionOnlyNavDirections(R.id.action_permissions_fragment_to_menuFragment);
+  }
 }

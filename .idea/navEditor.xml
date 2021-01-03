@@ -46,6 +46,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="menuFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="297" />
+                            <option name="y" value="359" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="permissions_fragment">
                     <value>
                       <LayoutPositions>
@@ -57,6 +69,11 @@
                         </option>
                         <option name="myPositions">
                           <map>
+                            <entry key="action_permissions_fragment_to_menuFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_permissions_to_selector">
                               <value>
                                 <LayoutPositions />

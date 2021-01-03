@@ -2,4 +2,9 @@
 <resources>
     <string name="app_name">ARDesigner</string>
     <string name="capture">Capture</string>
+
+    <string name="products">Товары</string>
+    <string name="retailers">Ритейлеры</string>
+    <string name="collections">Подборки</string>
+
 </resources>

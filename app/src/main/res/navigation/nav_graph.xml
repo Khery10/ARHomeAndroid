@@ -30,6 +30,9 @@
             app:destination="@id/selector_fragment"
             app:popUpTo="@id/permissions_fragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_permissions_fragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
 
     </fragment>
 
@@ -93,5 +96,10 @@
             app:argType="boolean"
             android:defaultValue="false" />
     </fragment>
+
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.example.android.ardesigner.basic.views.fragments.MenuFragment"
+        android:label="MenuFragment" />
 
 </navigation>

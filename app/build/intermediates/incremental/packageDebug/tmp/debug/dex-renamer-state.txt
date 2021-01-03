@@ -1,4 +1,4 @@
-#Thu Dec 31 02:41:24 MSK 2020
+#Sun Jan 03 12:39:06 MSK 2021
 path.2=classes_0.dex
 path.1=classes.dex
 path.0=classes.dex

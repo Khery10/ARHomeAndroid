@@ -22,7 +22,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import androidx.test.rule.GrantPermissionRule
-import com.example.android.ardesigner.basic.views.fragments.CameraActivity
+import com.example.android.ardesigner.basic.views.camera.CameraActivity
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test

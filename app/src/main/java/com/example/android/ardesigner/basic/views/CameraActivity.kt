@@ -1,19 +1,28 @@
+package com.example.android.ardesigner.basic.views
 
-package com.example.android.ardesigner.basic.views.fragments
-
+import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.android.ardesigner.basic.R
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasActivityInjector
+import dagger.android.support.HasSupportFragmentInjector
+import javax.inject.Inject
 
-class CameraActivity : AppCompatActivity() {
+class CameraActivity : AppCompatActivity(), HasSupportFragmentInjector {
+
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
     private lateinit var container: FrameLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_camera)
+        setContentView(R.layout.camera_activity)
         container = findViewById(R.id.fragment_container)
     }
 
@@ -40,4 +49,6 @@ class CameraActivity : AppCompatActivity() {
         const val ANIMATION_SLOW_MILLIS = 100L
         private const val IMMERSIVE_FLAG_TIMEOUT = 500L
     }
+
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> = dispatchingAndroidInjector
 }

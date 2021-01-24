@@ -1,26 +1,29 @@
 package com.example.android.ardesigner.basic.views
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import androidx.fragment.app.Fragment
 import com.example.android.ardesigner.basic.R
-import com.example.android.ardesigner.basic.views.fragments.CameraActivity
-import com.example.android.camera.utils.sliding.SlidingImageManager
+import com.example.android.ardesigner.basic.views.loading.LoadingFragment
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasActivityInjector
+import dagger.android.support.HasSupportFragmentInjector
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
+
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val slidingManager = SlidingImageManager(this)
-        slidingManager.onCreate()
-
-        Handler().postDelayed(object : Runnable {
-            override fun run() {
-                startActivity(Intent(this@MainActivity, CameraActivity::class.java))
-                slidingManager.onDestroy()
-                finish()
-            }
-        }, 5000)
+        setContentView(R.layout.main_activity)
     }
+
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> = dispatchingAndroidInjector
 }

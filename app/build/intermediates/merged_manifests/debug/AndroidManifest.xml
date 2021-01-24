@@ -8,6 +8,7 @@
         android:minSdkVersion="21"
         android:targetSdkVersion="29" />
     <!-- Permission declarations -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" /> <!-- A camera with (optional) RAW capability is required to use this application -->
     <uses-feature android:name="android.hardware.camera.any" />
     <uses-feature
@@ -15,6 +16,7 @@
         android:required="false" />
 
     <application
+        android:name="com.example.android.ardesigner.basic.DesignerApp"
         android:allowBackup="true"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:debuggable="true"
@@ -22,7 +24,8 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:testOnly="true" >
+        android:testOnly="true"
+        android:usesCleartextTraffic="true" >
         <activity
             android:name="com.example.android.ardesigner.basic.views.MainActivity"
             android:theme="@style/AppTheme" >
@@ -35,9 +38,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.android.ardesigner.basic.views.fragments.CameraActivity"
-            android:theme="@style/AppTheme" >
-        </activity>
+            android:name="com.example.android.ardesigner.basic.views.CameraActivity"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

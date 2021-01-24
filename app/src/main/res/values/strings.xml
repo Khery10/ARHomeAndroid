@@ -7,4 +7,6 @@
     <string name="retailers">Ритейлеры</string>
     <string name="collections">Подборки</string>
 
+    <string name="ic_slider_dir">slider</string>
+
 </resources>

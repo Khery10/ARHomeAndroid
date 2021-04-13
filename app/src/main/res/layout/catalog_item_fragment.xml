@@ -1,27 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="item"
-            type="com.example.android.ardesigner.basic.data.ITextImageItem" />
+            type="com.example.android.ardesigner.basic.data.ITextImageData" />
     </data>
 
     <RelativeLayout
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/catalog_item_img"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:gravity="center_horizontal"
-            app:imageUrl="@{item.imgUrl}">
+            app:imageUrl="@{item.imageUrl}">
 
         </ImageView>
 
@@ -33,7 +30,10 @@
             android:layout_alignRight="@id/catalog_item_img"
             android:layout_alignBottom="@id/catalog_item_img"
             android:gravity="bottom"
-            android:text="@{item.name}"></TextView>
+            android:text="@{item.name}"
+            style="@style/ImageText">
+        </TextView>
 
     </RelativeLayout>
 </layout>
+

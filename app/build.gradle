@@ -4,7 +4,6 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: "androidx.navigation.safeargs"
 
-
 android {
     compileSdkVersion 29
     defaultConfig {
@@ -62,9 +61,18 @@ dependencies {
 
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.16'
 
+
     implementation deps.dagger.runtime
     implementation deps.dagger.android
     implementation deps.dagger.android_support
+
+    implementation deps.retrofit2.retrofit
+    implementation deps.retrofit2.retrofit_converter_gson
+    implementation deps.retrofit2.retrofit_adapter_rxjava
+
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
+
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'

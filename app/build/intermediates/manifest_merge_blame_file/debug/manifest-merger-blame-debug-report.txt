@@ -6,71 +6,71 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="21"
-8-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml
+8-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml
 9        android:targetSdkVersion="29" />
-9-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml
+9-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml
 10    <!-- Permission declarations -->
 11    <uses-permission android:name="android.permission.INTERNET" />
-11-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml:6:5-67
-11-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml:6:22-64
+11-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml:6:5-67
+11-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml:6:22-64
 12    <uses-permission android:name="android.permission.CAMERA" /> <!-- A camera with (optional) RAW capability is required to use this application -->
-12-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml:7:5-65
-12-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml:7:22-62
+12-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml:7:5-65
+12-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml:7:22-62
 13    <uses-feature android:name="android.hardware.camera.any" />
-13-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml:8:5-64
-13-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml:8:19-61
+13-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml:8:5-64
+13-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml:8:19-61
 14    <uses-feature
-14-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml:9:5-11:36
+14-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml:9:5-11:36
 15        android:name="android.hardware.camera.raw"
-15-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml:10:9-51
+15-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml:10:9-51
 16        android:required="false" />
-16-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml:11:9-33
+16-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml:11:9-33
 17
 18    <application
-18-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml:13:5-37:19
+18-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml:13:5-37:19
 19        android:name="com.example.android.ardesigner.basic.DesignerApp"
-19-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml:14:9-36
+19-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml:14:9-36
 20        android:allowBackup="true"
-20-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml:15:9-35
+20-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml:15:9-35
 21        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-21-->[androidx.core:core:1.3.2] C:\Users\ZVER\.gradle\caches\transforms-2\files-2.1\8c2a50acff618dfbba7a4feb2d6aef1b\core-1.3.2\AndroidManifest.xml:24:18-86
+21-->[androidx.core:core:1.3.2] C:\Users\Nomad\.gradle\caches\transforms-2\files-2.1\d1702e49a467f975d0b5f850b401faa2\core-1.3.2\AndroidManifest.xml:24:18-86
 22        android:debuggable="true"
 23        android:fullBackupContent="true"
-23-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml:16:9-41
+23-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml:16:9-41
 24        android:icon="@drawable/ic_launcher"
-24-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml:17:9-45
+24-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml:17:9-45
 25        android:label="@string/app_name"
-25-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml:18:9-41
+25-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml:18:9-41
 26        android:supportsRtl="true"
-26-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml:19:9-35
+26-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml:19:9-35
 27        android:testOnly="true"
 28        android:usesCleartextTraffic="true" >
-28-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml:20:9-44
+28-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml:20:9-44
 29        <activity
-29-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml:23:9-32:20
+29-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml:23:9-32:20
 30            android:name="com.example.android.ardesigner.basic.views.MainActivity"
-30-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml:24:13-47
+30-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml:24:13-47
 31            android:theme="@style/AppTheme" >
-31-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml:25:13-44
+31-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml:25:13-44
 32
 33            <!-- Main app intent filter -->
 34            <intent-filter>
-34-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml:28:13-31:29
+34-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml:28:13-31:29
 35                <action android:name="android.intent.action.MAIN" />
-35-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml:29:17-69
-35-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml:29:25-66
+35-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml:29:17-69
+35-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml:29:25-66
 36
 37                <category android:name="android.intent.category.LAUNCHER" />
-37-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml:30:17-77
-37-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml:30:27-74
+37-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml:30:17-77
+37-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml:30:27-74
 38            </intent-filter>
 39        </activity>
 40        <activity
-40-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml:34:9-36:56
+40-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml:34:9-36:56
 41            android:name="com.example.android.ardesigner.basic.views.CameraActivity"
-41-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml:35:13-49
+41-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml:35:13-49
 42            android:theme="@style/AppTheme" />
-42-->C:\Users\ZVER\Desktop\ARDesigner\app\src\main\AndroidManifest.xml:36:13-44
+42-->C:\Users\Nomad\Desktop\ARHome\Android\ARDesigner\app\src\main\AndroidManifest.xml:36:13-44
 43    </application>
 44
 45</manifest>

@@ -1,5 +1,6 @@
 
 buildscript {
+    apply from: 'versions.gradle'
     // Top-level variables used for versioning
     ext.kotlin_version = '+'
     ext.java_version = JavaVersion.VERSION_1_8
@@ -10,7 +11,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.3'
+        classpath 'com.android.tools.build:gradle:4.1.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.2.2"
 

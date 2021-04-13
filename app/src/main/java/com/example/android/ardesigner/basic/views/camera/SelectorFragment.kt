@@ -42,11 +42,11 @@ class SelectorFragment : Fragment() {
             val layoutId = android.R.layout.simple_list_item_1
             adapter = GenericListAdapter(cameraList, itemLayoutId = layoutId) { view, item, _ ->
                 view.findViewById<TextView>(android.R.id.text1).text = item.title
-                view.setOnClickListener {
-                    Navigation.findNavController(requireActivity(), R.id.fragment_container)
-                            .navigate(SelectorFragmentDirections.actionSelectorToCamera(
-                                    item.cameraId, item.format))
-                }
+//                view.setOnClickListener {
+//                    Navigation.findNavController(requireActivity(), R.id.fragment_container)
+//                            .navigate(SelectorFragmentDirections.actionSelectorToCamera(
+//                                    item.cameraId, item.format))
+//                }
             }
         }
 
@@ -79,7 +79,6 @@ class SelectorFragment : Fragment() {
                         CameraMetadata.REQUEST_AVAILABLE_CAPABILITIES_BACKWARD_COMPATIBLE) ?: false
             }
 
-
             // Iterate over the list of cameras and return all the compatible ones
             cameraIds.forEach { id ->
                 val characteristics = cameraManager.getCameraCharacteristics(id)
@@ -111,6 +110,8 @@ class SelectorFragment : Fragment() {
                     availableCameras.add(FormatItem(
                             "$orientation DEPTH ($id)", id, ImageFormat.DEPTH_JPEG))
                 }
+
+
             }
 
             return availableCameras

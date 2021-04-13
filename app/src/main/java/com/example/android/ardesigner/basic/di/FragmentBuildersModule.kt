@@ -1,7 +1,8 @@
 package com.example.android.ardesigner.basic.di
 
+import com.example.android.ardesigner.basic.views.camera.CameraFragment
 import com.example.android.ardesigner.basic.views.menu.MenuFragment
-import com.example.android.ardesigner.basic.views.menu.productsTypes.ProductsTypesFragment
+import com.example.android.ardesigner.basic.views.menu.categories.CategoryFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -12,5 +13,8 @@ abstract class FragmentBuildersModule {
     abstract fun contributeMenuFragment(): MenuFragment
 
     @ContributesAndroidInjector
-    abstract fun contributeProductsTypesFragment(): ProductsTypesFragment
+    abstract fun contributeCategoryFragment(): CategoryFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeCameraFragment(): CameraFragment
 }

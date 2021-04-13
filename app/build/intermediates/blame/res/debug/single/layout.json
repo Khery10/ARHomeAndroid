@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "C:\\Users\\Nomad\\Desktop\\ARHome\\Android\\ARDesigner\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\catalog_fragment.xml",
+        "source": "C:\\Users\\Nomad\\Desktop\\ARHome\\Android\\ARDesigner\\app\\src\\main\\res\\layout\\catalog_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\Nomad\\Desktop\\ARHome\\Android\\ARDesigner\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\catalog_item_fragment.xml",
+        "source": "C:\\Users\\Nomad\\Desktop\\ARHome\\Android\\ARDesigner\\app\\src\\main\\res\\layout\\catalog_item_fragment.xml"
+    }
+]

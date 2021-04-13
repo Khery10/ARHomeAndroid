@@ -1,4 +1,4 @@
-com.android.example.ardesigner.basic
+com.example.android.ardesigner.basic
 anim abc_fade_in
 anim abc_fade_out
 anim abc_grow_fade_in_from_bottom
@@ -1067,6 +1067,7 @@ drawable abc_textfield_search_activated_mtrl_alpha
 drawable abc_textfield_search_default_mtrl_alpha
 drawable abc_textfield_search_material
 drawable abc_vector_test
+drawable active_dot
 drawable avd_hide_password
 drawable avd_show_password
 drawable btn_checkbox_checked_mtrl
@@ -1094,9 +1095,11 @@ drawable ic_shutter
 drawable ic_shutter_focused
 drawable ic_shutter_normal
 drawable ic_shutter_pressed
+drawable ic_to_camera
 drawable mtrl_snackbar_background
 drawable mtrl_tabs_default_indicator
 drawable navigation_empty_icon
+drawable non_active_dot
 drawable notification_action_background
 drawable notification_bg
 drawable notification_bg_low
@@ -1171,7 +1174,6 @@ id action_mode_bar
 id action_mode_bar_stub
 id action_mode_close_button
 id action_permissions_to_loading
-id action_selector_to_camera
 id action_text
 id actions
 id activity_chooser_view_content
@@ -1191,6 +1193,7 @@ id cancel_action
 id capture_button
 id catalog_item_img
 id catalog_item_list
+id catalog_item_scroll
 id catalogs_viewer
 id center
 id center_horizontal
@@ -1249,6 +1252,7 @@ id icon
 id icon_group
 id ifRoom
 id image
+id image_to_camera
 id image_viewer_fragment
 id info
 id invisible
@@ -1327,7 +1331,6 @@ id search_src_text
 id search_voice_btn
 id select_dialog_listview
 id selected
-id selector_fragment
 id shortcut
 id showCustom
 id showHome
@@ -1744,6 +1747,7 @@ style Base_Widget_MaterialComponents_TextInputLayout
 style CardView
 style CardView_Dark
 style CardView_Light
+style ImageText
 style MenuTextHeader
 style Platform_AppCompat
 style Platform_AppCompat_Light

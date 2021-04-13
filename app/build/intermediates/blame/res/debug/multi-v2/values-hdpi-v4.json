@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\ZVER\\Desktop\\ARDesigner\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-hdpi-v4\\values-hdpi-v4.xml",
+            "outputFile": "C:\\Users\\Nomad\\Desktop\\ARHome\\Android\\ARDesigner\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-hdpi-v4\\values-hdpi-v4.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\ZVER\\.gradle\\caches\\transforms-2\\files-2.1\\dc4d71004a1d0aee79c016f92a5ac9fc\\appcompat-1.2.0\\res\\values-hdpi-v4\\values-hdpi-v4.xml",
+                    "source": "C:\\Users\\Nomad\\.gradle\\caches\\transforms-2\\files-2.1\\00852c9ddf8a246f43cd910cfc6c34bd\\appcompat-1.2.0\\res\\values-hdpi-v4\\values-hdpi-v4.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

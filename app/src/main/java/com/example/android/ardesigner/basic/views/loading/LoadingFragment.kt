@@ -36,7 +36,7 @@ class LoadingFragment : Fragment() {
             override fun run() {
                 findNavController().navigate(LoadingFragmentDirections.actionLoadingToMenuFragment())
             }
-        }, 5000)
+        }, 1000)
     }
 
     private fun setUpSlidingViewPager(view: View) {

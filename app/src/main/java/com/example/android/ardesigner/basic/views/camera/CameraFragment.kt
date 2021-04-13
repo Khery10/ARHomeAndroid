@@ -32,12 +32,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.navArgs
 import com.example.android.camera.utils.computeExifOrientation
 import com.example.android.camera.utils.getPreviewOutputSize
 import com.example.android.camera.utils.AutoFitSurfaceView
 import com.example.android.camera.utils.OrientationLiveData
 import com.example.android.ardesigner.basic.R
+import com.example.android.ardesigner.basic.camera.interfaces.CameraInfo
+import com.example.android.ardesigner.basic.camera.interfaces.ICameraProvider
+import com.example.android.ardesigner.basic.di.Injectable
 import com.example.android.ardesigner.basic.views.CameraActivity
 import kotlinx.android.synthetic.main.camera_fragment.*
 import kotlinx.coroutines.Dispatchers
@@ -52,15 +54,16 @@ import java.util.concurrent.ArrayBlockingQueue
 import java.util.concurrent.TimeoutException
 import java.util.Date
 import java.util.Locale
+import javax.inject.Inject
 import kotlin.RuntimeException
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-class CameraFragment : Fragment() {
+class CameraFragment : Fragment(), Injectable {
 
-    /** AndroidX navigation arguments */
-    private val args: CameraFragmentArgs by navArgs()
+    @Inject
+    lateinit var cameraProvider: ICameraProvider
 
     /** Host's navigation controller */
     private val navController: NavController by lazy {
@@ -73,9 +76,13 @@ class CameraFragment : Fragment() {
         context.getSystemService(Context.CAMERA_SERVICE) as CameraManager
     }
 
+    private val cameraInfo: CameraInfo by lazy {
+        cameraProvider.getCameraCharacteristics(cameraManager)
+    }
+
     /** [CameraCharacteristics] corresponding to the provided Camera ID */
-    private val characteristics: CameraCharacteristics by lazy {
-        cameraManager.getCameraCharacteristics(args.cameraId)
+    private val cameraCharacteristics: CameraCharacteristics by lazy {
+        cameraManager.getCameraCharacteristics(cameraInfo.cameraId)
     }
 
     /** Readers used as buffers for camera still shots */
@@ -151,7 +158,7 @@ class CameraFragment : Fragment() {
 
                 // Selects appropriate preview size and configures view finder
                 val previewSize = getPreviewOutputSize(
-                        viewFinder.display, characteristics, SurfaceHolder::class.java)
+                        viewFinder.display, cameraCharacteristics, SurfaceHolder::class.java)
                 Log.d(TAG, "View finder size: ${viewFinder.width} x ${viewFinder.height}")
                 Log.d(TAG, "Selected preview size: $previewSize")
                 viewFinder.setAspectRatio(previewSize.width, previewSize.height)
@@ -162,7 +169,7 @@ class CameraFragment : Fragment() {
         })
 
         // Used to rotate the output media to match device orientation
-        relativeOrientation = OrientationLiveData(requireContext(), characteristics).apply {
+        relativeOrientation = OrientationLiveData(requireContext(), cameraCharacteristics).apply {
             observe(viewLifecycleOwner, Observer {
                 orientation -> Log.d(TAG, "Orientation changed: $orientation")
             })
@@ -178,14 +185,15 @@ class CameraFragment : Fragment() {
      */
     private fun initializeCamera() = lifecycleScope.launch(Dispatchers.Main) {
         // Open the selected camera
-        camera = openCamera(cameraManager, args.cameraId, cameraHandler)
+        camera = openCamera(cameraManager, cameraInfo.cameraId, cameraHandler)
 
         // Initialize an image reader which will be used to capture still photos
-        val size = characteristics.get(
+        val size = cameraCharacteristics.get(
                 CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)!!
-                .getOutputSizes(args.pixelFormat).maxBy { it.height * it.width }!!
+                .getOutputSizes(cameraInfo.outputFormat).maxByOrNull { it.height * it.width }!!
+
         imageReader = ImageReader.newInstance(
-                size.width, size.height, args.pixelFormat, IMAGE_BUFFER_SIZE)
+                size.width, size.height, cameraInfo.outputFormat, IMAGE_BUFFER_SIZE)
 
         // Creates list of Surfaces where the camera will output frames
         val targets = listOf(viewFinder.holder.surface, imageReader.surface)
@@ -368,7 +376,7 @@ class CameraFragment : Fragment() {
 
                         // Compute EXIF orientation metadata
                         val rotation = relativeOrientation.value ?: 0
-                        val mirrored = characteristics.get(CameraCharacteristics.LENS_FACING) ==
+                        val mirrored = cameraCharacteristics.get(CameraCharacteristics.LENS_FACING) ==
                                 CameraCharacteristics.LENS_FACING_FRONT
                         val exifOrientation = computeExifOrientation(rotation, mirrored)
 
@@ -403,7 +411,7 @@ class CameraFragment : Fragment() {
 
             // When the format is RAW we use the DngCreator utility library
             ImageFormat.RAW_SENSOR -> {
-                val dngCreator = DngCreator(characteristics, result.metadata)
+                val dngCreator = DngCreator(cameraCharacteristics, result.metadata)
                 try {
                     val output = createFile(requireContext(), "dng")
                     FileOutputStream(output).use { dngCreator.writeImage(it, result.image) }

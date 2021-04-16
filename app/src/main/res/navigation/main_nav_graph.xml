@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/permissions_fragment"
-        android:name="com.example.android.ardesigner.basic.views.loading.PermissionsFragment"
+        android:name="com.arhome.views.loading.PermissionsFragment"
         android:label="Permissions" >
 
         <action
@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/loadingFragment"
-        android:name="com.example.android.ardesigner.basic.views.loading.LoadingFragment">
+        android:name="com.arhome.views.loading.LoadingFragment">
 
         <action
             android:id="@+id/action_loading_to_menuFragment"
@@ -29,6 +29,6 @@
 
     <fragment
         android:id="@+id/menuFragment"
-        android:name="com.example.android.ardesigner.basic.views.menu.MenuFragment" />
+        android:name="com.arhome.views.menu.MenuFragment" />
 
 </navigation>

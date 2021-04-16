@@ -14,4 +14,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.android.camera.utils" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.android.camera.utils" >
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+</manifest>

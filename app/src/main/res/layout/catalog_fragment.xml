@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/catalog_item_fragment">
+                tools:listitem="@layout/catalog_item">
 
             </androidx.recyclerview.widget.RecyclerView>
 

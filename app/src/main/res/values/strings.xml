@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ARDesigner</string>
+    <string name="app_name">ARHome</string>
+
     <string name="capture">Capture</string>
 
     <string name="products">Товары</string>

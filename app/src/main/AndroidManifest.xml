@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.android.ardesigner.basic">
+    package="com.arhome">
     <!-- Permission declarations -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" /> <!-- A camera with (optional) RAW capability is required to use this application -->
@@ -11,7 +11,7 @@
         android:required="false" />
 
     <application
-        android:name=".DesignerApp"
+        android:name="com.arhome.DesignerApp"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@drawable/ic_launcher"
@@ -21,7 +21,7 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name=".views.MainActivity"
+            android:name="com.arhome.views.MainActivity"
             android:theme="@style/AppTheme">
 
             <!-- Main app intent filter -->
@@ -32,7 +32,7 @@
         </activity>
 
         <activity
-            android:name=".views.CameraActivity"
+            android:name="com.arhome.views.CameraActivity"
             android:theme="@style/AppTheme"></activity>
     </application>
 

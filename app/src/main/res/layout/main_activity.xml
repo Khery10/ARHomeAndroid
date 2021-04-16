@@ -10,5 +10,5 @@
     app:defaultNavHost="true"
     android:id="@+id/main_fragment_container"
     app:navGraph="@navigation/main_nav_graph"
-    tools:context=".views.MainActivity"/>
+    tools:context="com.arhome.views.MainActivity"/>
 

@@ -11,4 +11,4 @@
     android:keepScreenOn="true"
     app:defaultNavHost="true"
     app:navGraph="@navigation/camera_nav_graph"
-    tools:context=".views.CameraActivity" />
+    tools:context="com.arhome.views.CameraActivity" />

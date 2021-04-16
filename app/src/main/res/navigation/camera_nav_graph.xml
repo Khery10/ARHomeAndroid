@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/camera_fragment"
-        android:name="com.example.android.ardesigner.basic.views.camera.CameraFragment"
+        android:name="com.arhome.views.camera.CameraFragment"
         android:label="Camera" >
 
         <action
@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/image_viewer_fragment"
-        android:name="com.example.android.ardesigner.basic.views.camera.ImageViewerFragment"
+        android:name="com.arhome.views.camera.ImageViewerFragment"
         android:label="Image Viewer" >
 
         <argument

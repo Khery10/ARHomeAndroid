@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.arhome.data.interfaces.ITextImageData" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/catalog_item_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:imageUrl="@{item.imageUrl}">
+
+        </ImageView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/catalog_item_img"
+            android:layout_alignTop="@id/catalog_item_img"
+            android:layout_alignRight="@id/catalog_item_img"
+            android:layout_alignBottom="@id/catalog_item_img"
+            android:gravity="bottom"
+            android:text="@{item.name}"
+            style="@style/ImageText">
+        </TextView>
+
+    </RelativeLayout>
+</layout>
+

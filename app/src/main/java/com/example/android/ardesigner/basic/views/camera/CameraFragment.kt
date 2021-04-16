@@ -32,10 +32,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.example.android.camera.utils.computeExifOrientation
-import com.example.android.camera.utils.getPreviewOutputSize
-import com.example.android.camera.utils.AutoFitSurfaceView
-import com.example.android.camera.utils.OrientationLiveData
+import com.example.android.utils.camera.computeExifOrientation
+import com.example.android.utils.camera.getPreviewOutputSize
+import com.example.android.utils.camera.AutoFitSurfaceView
+import com.example.android.utils.camera.OrientationLiveData
 import com.example.android.ardesigner.basic.R
 import com.example.android.ardesigner.basic.camera.interfaces.CameraInfo
 import com.example.android.ardesigner.basic.camera.interfaces.ICameraProvider

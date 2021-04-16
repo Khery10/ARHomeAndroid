@@ -1,4 +1,3 @@
-
 package com.example.android.ardesigner.basic.views.camera
 
 import android.graphics.Bitmap
@@ -16,12 +15,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
-import com.example.android.camera.utils.GenericListAdapter
-import com.example.android.camera.utils.decodeExifOrientation
+import com.example.android.ardesigner.basic.R
+import com.example.android.utils.camera.GenericListAdapter
+import com.example.android.utils.camera.decodeExifOrientation
+import com.example.android.utils.io.decodeBitmap
+import com.example.android.utils.io.loadInputBuffer
+import kotlinx.android.synthetic.main.image_viewer_fragment.*
+import kotlinx.android.synthetic.main.image_viewer_fragment.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.BufferedInputStream
-import java.io.File
 import kotlin.math.max
 
 
@@ -58,56 +60,61 @@ class ImageViewerFragment : Fragment() {
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? = ViewPager2(requireContext()).apply {
-        // Populate the ViewPager and implement a cache of two media items
-        offscreenPageLimit = 2
-        adapter = GenericListAdapter(
-                bitmapList,
-                itemViewFactory = { imageViewFactory() }) { view, item, _ ->
-            view as ImageView
-            Glide.with(view).load(item).into(view)
-        }
+    ): View? {
+//        ViewPager2(requireContext()).apply {
+//        // Populate the ViewPager and implement a cache of two media items
+//        adapter = GenericListAdapter(
+//                bitmapList,
+//                itemViewFactory = { imageViewFactory() }) { view, item, _ ->
+//            view as ImageView
+//            Glide.with(view).load(item).into(view)
+//        }
+
+        var view = inflater.inflate(R.layout.image_viewer_fragment, container, false)
+
+        val inputBuffer = loadInputBuffer(args.filePath)
+        val item = decodeBitmap(inputBuffer, 0, inputBuffer.size, bitmapTransformation, bitmapOptions)
+        Glide.with(view.imageViewer).load(item).into(view.imageViewer)
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view as ViewPager2
-        lifecycleScope.launch(Dispatchers.IO) {
-
-            // Load input image file
-            val inputBuffer = loadInputBuffer()
-
-            // Load the main JPEG image
-            addItemToViewPager(view, decodeBitmap(inputBuffer, 0, inputBuffer.size))
-
-            // If we have depth data attached, attempt to load it
-            if (isDepth) {
-                try {
-                    val depthStart = findNextJpegEndMarker(inputBuffer, 2)
-                    addItemToViewPager(view, decodeBitmap(
-                            inputBuffer, depthStart, inputBuffer.size - depthStart))
-
-                    val confidenceStart = findNextJpegEndMarker(inputBuffer, depthStart)
-                    addItemToViewPager(view, decodeBitmap(
-                            inputBuffer, confidenceStart, inputBuffer.size - confidenceStart))
-
-                } catch (exc: RuntimeException) {
-                    Log.e(TAG, "Invalid start marker for depth or confidence data")
-                }
-            }
-        }
-    }
-
-    /** Utility function used to read input file into a byte array */
-    private fun loadInputBuffer(): ByteArray {
-        val inputFile = File(args.filePath)
-        return BufferedInputStream(inputFile.inputStream()).let { stream ->
-            ByteArray(stream.available()).also {
-                stream.read(it)
-                stream.close()
-            }
-        }
+//        view as ViewPager2
+//        lifecycleScope.launch(Dispatchers.IO) {
+//
+//            // Load input image file
+//            val inputBuffer = loadInputBuffer(args.filePath)
+//
+//            // Load the main JPEG image
+//            addItemToViewPager(view, decodeBitmap(inputBuffer, 0, inputBuffer.size, bitmapTransformation, bitmapOptions))
+//
+//            // If we have depth data attached, attempt to load it
+//            if (isDepth) {
+//                try {
+//                    val depthStart = findNextJpegEndMarker(inputBuffer, 2)
+//                    addItemToViewPager(view, decodeBitmap(
+//                            inputBuffer,
+//                            depthStart,
+//                            inputBuffer.size - depthStart,
+//                            bitmapTransformation,
+//                            bitmapOptions))
+//
+//                    val confidenceStart = findNextJpegEndMarker(inputBuffer, depthStart)
+//                    addItemToViewPager(view, decodeBitmap(
+//                            inputBuffer,
+//                            confidenceStart,
+//                            inputBuffer.size - confidenceStart,
+//                            bitmapTransformation,
+//                            bitmapOptions))
+//
+//                } catch (exc: RuntimeException) {
+//                    Log.e(TAG, "Invalid start marker for depth or confidence data")
+//                }
+//            }
+//        }
     }
 
     /** Utility function used to add an item to the viewpager and notify it, in the main thread */
@@ -116,16 +123,6 @@ class ImageViewerFragment : Fragment() {
         view.adapter!!.notifyDataSetChanged()
     }
 
-    /** Utility function used to decode a [Bitmap] from a byte array */
-    private fun decodeBitmap(buffer: ByteArray, start: Int, length: Int): Bitmap {
-
-        // Load bitmap from given buffer
-        val bitmap = BitmapFactory.decodeByteArray(buffer, start, length, bitmapOptions)
-
-        // Transform bitmap orientation using provided metadata
-        return Bitmap.createBitmap(
-                bitmap, 0, 0, bitmap.width, bitmap.height, bitmapTransformation, true)
-    }
 
     companion object {
         private val TAG = ImageViewerFragment::class.java.simpleName
@@ -144,7 +141,8 @@ class ImageViewerFragment : Fragment() {
             // Sanitize input arguments
             assert(start >= 0) { "Invalid start marker: $start" }
             assert(jpegBuffer.size > start) {
-                "Buffer size (${jpegBuffer.size}) smaller than start marker ($start)" }
+                "Buffer size (${jpegBuffer.size}) smaller than start marker ($start)"
+            }
 
             // Perform a linear search until the delimiter is found
             for (i in start until jpegBuffer.size - 1) {

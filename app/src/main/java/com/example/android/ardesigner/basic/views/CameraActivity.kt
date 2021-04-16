@@ -1,6 +1,5 @@
 package com.example.android.ardesigner.basic.views
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
@@ -9,7 +8,6 @@ import androidx.fragment.app.Fragment
 import com.example.android.ardesigner.basic.R
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
 import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
 

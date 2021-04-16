@@ -7,18 +7,6 @@
     app:startDestination="@id/camera_fragment">
 
 
-<!--    <fragment-->
-<!--        android:id="@+id/selector_fragment"-->
-<!--        android:name="com.example.android.ardesigner.basic.views.camera.SelectorFragment"-->
-<!--        android:label="Selector" >-->
-
-<!--        <action-->
-<!--            android:id="@+id/action_selector_to_camera"-->
-<!--            app:launchSingleTop="true"-->
-<!--            app:destination="@id/camera_fragment" />-->
-
-<!--    </fragment>-->
-
     <fragment
         android:id="@+id/camera_fragment"
         android:name="com.example.android.ardesigner.basic.views.camera.CameraFragment"

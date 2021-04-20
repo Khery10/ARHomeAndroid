@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.arhome.utils.repo.Resource" />
+        <import type="com.arhome.utils.repo.ResourceStatus" />
+        <import type="com.arhome.views.common.RetryCallback" />
+
+        <variable
+            name="resource"
+            type="Resource" />
+
+        <variable
+            name="callback"
+            type="RetryCallback" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:visibleGone="@{resource.data == null}">
+
+        <include
+            layout="@layout/loading_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:isLoading="@{resource.status == ResourceStatus.LOADING}"/>
+
+        <Button
+            android:id="@+id/retry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> callback.retry()}"
+            android:text="@string/retry"
+            app:visibleGone="@{resource.status == ResourceStatus.ERROR}" />
+
+        <TextView
+            android:id="@+id/error_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{resource.message}"
+            app:visibleGone="@{resource.status == ResourceStatus.ERROR}" />
+
+    </LinearLayout>
+</layout>

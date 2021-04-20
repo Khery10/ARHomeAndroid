@@ -4,36 +4,81 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <data>
 
-        <ScrollView
+        <import type="androidx.lifecycle.LiveData" />
+
+        <import type="com.arhome.utils.repo.Resource" />
+
+        <import type="com.arhome.utils.repo.ResourceStatus" />
+
+        <import type="com.arhome.views.common.RetryCallback" />
+
+        <variable
+            name="resource"
+            type="LiveData&lt;Resource&lt;Object>>" />
+
+        <variable
+            name="retryCallback"
+            type="RetryCallback" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:fadeScrollbars="true"
-            android:overScrollMode="never"
-            android:scrollbars="none"
-            android:id="@+id/catalog_item_scroll">
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/catalog_item_list"
+            <ScrollView
+                android:id="@+id/catalog_item_scroll"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:fadeScrollbars="true"
+                android:overScrollMode="never"
+                android:scrollbars="none">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/catalog_item_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/catalog_item">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+            </ScrollView>
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/catalog_item">
+                android:text=" ">
 
-            </androidx.recyclerview.widget.RecyclerView>
+            </TextView>
 
-        </ScrollView>
+        </LinearLayout>
 
-        <TextView
+        <include
+            layout="@layout/loading_state"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" ">
+            app:callback="@{() -> retryCallback.retry()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:resource="@{(Resource) resource}" />
 
-        </TextView>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </layout>

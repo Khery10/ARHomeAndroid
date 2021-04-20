@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import com.arhome.AppExecutors
 import com.arhome.R
 import com.arhome.binding.FragmentDataBindingComponent
-import com.arhome.data.interfaces.ITextImageData
+import com.arhome.data.abstractions.ITextImageData
 import com.arhome.databinding.CatalogItemBinding
 
 class CatalogItemsAdapter(

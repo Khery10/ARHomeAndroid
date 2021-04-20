@@ -1,30 +1,19 @@
 package com.arhome.views.menu.categories
 
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.arhome.data.Category
-import com.arhome.repository.interfaces.ICategoryRepository
-import kotlinx.coroutines.*
+import com.arhome.repository.abstractions.ICategoryRepository
+import com.arhome.utils.repo.Resource
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 
 class CategoryViewModel @Inject constructor(val repository: ICategoryRepository) : ViewModel() {
 
-    val categories: MutableLiveData<List<Category>> = MutableLiveData<List<Category>>(listOf())
+    val categories: LiveData<Resource<List<Category>>> = repository.getCategoriesList()
 
-    private val parentJob = Job()
+    fun retry(){
 
-    private val coroutineContext: CoroutineContext
-        get() = parentJob + Dispatchers.Default
-
-    private val scope = CoroutineScope(coroutineContext)
-
-    fun fetchCategories() {
-
-        scope.launch {
-            val categoriesList = repository.getCategoriesList()
-            categories.postValue(categoriesList)
-        }
     }
+
 }

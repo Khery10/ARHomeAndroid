@@ -1,7 +1,7 @@
 package com.arhome.repository.net
 
 import com.arhome.data.Category
-import com.arhome.repository.interfaces.IProductRepository
+import com.arhome.repository.abstractions.IProductRepository
 
 class NetProductRepository : IProductRepository {
 

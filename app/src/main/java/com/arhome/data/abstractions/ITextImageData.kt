@@ -1,6 +1,4 @@
-package com.arhome.data.interfaces
-
-import java.util.*
+package com.arhome.data.abstractions
 
 interface ITextImageData {
     val id: Int

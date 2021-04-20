@@ -1,4 +1,4 @@
-package com.arhome.repository.interfaces
+package com.arhome.repository.abstractions
 
 import com.arhome.data.Category
 

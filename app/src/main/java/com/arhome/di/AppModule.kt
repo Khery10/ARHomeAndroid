@@ -4,9 +4,9 @@ import android.graphics.ImageFormat
 import android.hardware.camera2.CameraMetadata
 import com.arhome.camera.CameraProvider
 import com.arhome.camera.interfaces.ICameraProvider
-import com.arhome.repository.interfaces.ICategoryRepository
+import com.arhome.repository.abstractions.ICategoryRepository
 import com.arhome.repository.net.NetProductRepository
-import com.arhome.repository.interfaces.IProductRepository
+import com.arhome.repository.abstractions.IProductRepository
 import com.arhome.repository.net.NetCategoryRepository
 import dagger.Module
 import dagger.Provides

@@ -10,4 +10,6 @@
 
     <string name="ic_slider_dir">slider</string>
 
+    <string name="retry">Retry</string>
+
 </resources>

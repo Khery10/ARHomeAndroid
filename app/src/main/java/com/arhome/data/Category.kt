@@ -1,6 +1,6 @@
 package com.arhome.data
 
-import com.arhome.data.interfaces.ITextImageData
+import com.arhome.data.abstractions.ITextImageData
 
 data class Category(
         override val id: Int,

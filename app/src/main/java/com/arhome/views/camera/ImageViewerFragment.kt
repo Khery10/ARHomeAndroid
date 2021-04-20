@@ -1,149 +1,75 @@
 package com.arhome.views.camera
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Matrix
+import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.widget.ImageView
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.navArgs
-import androidx.viewpager2.widget.ViewPager2
+import com.arhome.R
+import com.arhome.databinding.ImageViewerFragmentBinding
 import com.bumptech.glide.Glide
-import com.arhome.utils.camera.GenericListAdapter
-import com.arhome.utils.camera.decodeExifOrientation
-import com.arhome.utils.io.decodeBitmap
-import com.arhome.utils.io.loadInputBuffer
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlin.math.max
-
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
+import kotlinx.android.synthetic.main.image_viewer_fragment.view.*
 
 class ImageViewerFragment : Fragment() {
 
     /** AndroidX navigation arguments */
     private val args: ImageViewerFragmentArgs by navArgs()
 
-    /** Default Bitmap decoding options */
-    private val bitmapOptions = BitmapFactory.Options().apply {
-        inJustDecodeBounds = false
-        // Keep Bitmaps at less than 1 MP
-        if (max(outHeight, outWidth) > DOWNSAMPLE_SIZE) {
-            val scaleFactorX = outWidth / DOWNSAMPLE_SIZE + 1
-            val scaleFactorY = outHeight / DOWNSAMPLE_SIZE + 1
-            inSampleSize = max(scaleFactorX, scaleFactorY)
-        }
-    }
+    private val _loaded: MutableLiveData<Boolean> = MutableLiveData(false)
 
-    /** Bitmap transformation derived from passed arguments */
-    private val bitmapTransformation: Matrix by lazy { decodeExifOrientation(args.orientation) }
-
-    /** Flag indicating that there is depth data available for this image */
-    private val isDepth: Boolean by lazy { args.depth }
-
-    /** Data backing our Bitmap viewpager */
-    private val bitmapList: MutableList<Bitmap> = mutableListOf()
-
-    private fun imageViewFactory() = ImageView(requireContext()).apply {
-        layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT)
-        adjustViewBounds = true
-        scaleType = ImageView.ScaleType.CENTER_CROP
-    }
+    lateinit var binding: ImageViewerFragmentBinding
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? = ViewPager2(requireContext()).apply {
-        // Populate the ViewPager and implement a cache of two media items
-        adapter = GenericListAdapter(
-                bitmapList,
-                itemViewFactory = { imageViewFactory() }) { view, item, _ ->
-            view as ImageView
-            Glide.with(view).load(item).into(view)
-        }
+    ): View? {
+
+        binding = DataBindingUtil.inflate(
+                inflater,
+                R.layout.image_viewer_fragment,
+                container,
+                false
+        )
+
+        binding.loaded = _loaded
+        binding.lifecycleOwner = viewLifecycleOwner
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view as ViewPager2
-        lifecycleScope.launch(Dispatchers.IO) {
+        Glide.with(view.imageViewer).load(args.filePath).listener(object : RequestListener<Drawable> {
 
-            // Load input image file
-            val inputBuffer = loadInputBuffer(args.filePath)
+            override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    isFirstResource: Boolean): Boolean {
 
-            // Load the main JPEG image
-            addItemToViewPager(view, decodeBitmap(inputBuffer, 0, inputBuffer.size, bitmapTransformation, bitmapOptions))
-
-            // If we have depth data attached, attempt to load it
-            if (isDepth) {
-                try {
-                    val depthStart = findNextJpegEndMarker(inputBuffer, 2)
-                    addItemToViewPager(view, decodeBitmap(
-                            inputBuffer,
-                            depthStart,
-                            inputBuffer.size - depthStart,
-                            bitmapTransformation,
-                            bitmapOptions))
-
-                    val confidenceStart = findNextJpegEndMarker(inputBuffer, depthStart)
-                    addItemToViewPager(view, decodeBitmap(
-                            inputBuffer,
-                            confidenceStart,
-                            inputBuffer.size - confidenceStart,
-                            bitmapTransformation,
-                            bitmapOptions))
-
-                } catch (exc: RuntimeException) {
-                    Log.e(TAG, "Invalid start marker for depth or confidence data")
-                }
-            }
-        }
-    }
-
-    /** Utility function used to add an item to the viewpager and notify it, in the main thread */
-    private fun addItemToViewPager(view: ViewPager2, item: Bitmap) = view.post {
-        bitmapList.add(item)
-        view.adapter!!.notifyDataSetChanged()
-    }
-
-
-    companion object {
-        private val TAG = ImageViewerFragment::class.java.simpleName
-
-        /** Maximum size of [Bitmap] decoded */
-        private const val DOWNSAMPLE_SIZE: Int = 1024  // 1MP
-
-        /** These are the magic numbers used to separate the different JPG data chunks */
-        private val JPEG_DELIMITER_BYTES = arrayOf(-1, -39)
-
-        /**
-         * Utility function used to find the markers indicating separation between JPEG data chunks
-         */
-        private fun findNextJpegEndMarker(jpegBuffer: ByteArray, start: Int): Int {
-
-            // Sanitize input arguments
-            assert(start >= 0) { "Invalid start marker: $start" }
-            assert(jpegBuffer.size > start) {
-                "Buffer size (${jpegBuffer.size}) smaller than start marker ($start)"
+                return false
             }
 
-            // Perform a linear search until the delimiter is found
-            for (i in start until jpegBuffer.size - 1) {
-                if (jpegBuffer[i].toInt() == JPEG_DELIMITER_BYTES[0] &&
-                        jpegBuffer[i + 1].toInt() == JPEG_DELIMITER_BYTES[1]) {
-                    return i + 2
-                }
+            override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean): Boolean {
+
+                _loaded.postValue(true)
+                return false
             }
 
-            // If we reach this, it means that no marker was found
-            throw RuntimeException("Separator marker not found in buffer (${jpegBuffer.size})")
-        }
+        }).into(view.imageViewer)
     }
 }

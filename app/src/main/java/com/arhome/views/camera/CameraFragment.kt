@@ -1,8 +1,9 @@
-
 package com.arhome.views.camera
 
 import android.annotation.SuppressLint
+import android.app.Activity.RESULT_OK
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.ImageFormat
 import android.hardware.camera2.CameraCaptureSession
@@ -19,6 +20,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.Surface
@@ -42,6 +44,7 @@ import com.arhome.camera.interfaces.ICameraProvider
 import com.arhome.di.Injectable
 import com.arhome.views.CameraActivity
 import kotlinx.android.synthetic.main.camera_fragment.*
+import kotlinx.android.synthetic.main.camera_fragment.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -128,6 +131,9 @@ class CameraFragment : Fragment(), Injectable {
     /** Live data listener for changes in the device orientation relative to the camera */
     private lateinit var relativeOrientation: OrientationLiveData
 
+    private val _pickImageRequestCode = 100
+    private var _loadingFromGallery = false
+
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -146,6 +152,12 @@ class CameraFragment : Fragment(), Injectable {
             insets.consumeSystemWindowInsets()
         }
 
+        gallery_button.setOnClickListener {
+            _loadingFromGallery = true
+            val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+            startActivityForResult(gallery, _pickImageRequestCode)
+        }
+
         viewFinder.holder.addCallback(object : SurfaceHolder.Callback {
             override fun surfaceDestroyed(holder: SurfaceHolder) = Unit
 
@@ -156,6 +168,10 @@ class CameraFragment : Fragment(), Injectable {
                     height: Int) = Unit
 
             override fun surfaceCreated(holder: SurfaceHolder) {
+
+                //Don`t repeat initializing camera, if load from gallery
+                if(_loadingFromGallery)
+                    return
 
                 // Selects appropriate preview size and configures view finder
                 val previewSize = getPreviewOutputSize(
@@ -173,8 +189,8 @@ class CameraFragment : Fragment(), Injectable {
 
         // Used to rotate the output media to match device orientation
         relativeOrientation = OrientationLiveData(requireContext(), cameraCharacteristics).apply {
-            observe(viewLifecycleOwner, Observer {
-                orientation -> Log.d(TAG, "Orientation changed: $orientation")
+            observe(viewLifecycleOwner, { orientation ->
+                Log.d(TAG, "Orientation changed: $orientation")
             })
         }
     }
@@ -266,7 +282,7 @@ class CameraFragment : Fragment(), Injectable {
             }
 
             override fun onError(device: CameraDevice, error: Int) {
-                val msg = when(error) {
+                val msg = when (error) {
                     ERROR_CAMERA_DEVICE -> "Fatal (device)"
                     ERROR_CAMERA_DISABLED -> "Device policy"
                     ERROR_CAMERA_IN_USE -> "Camera in use"
@@ -293,7 +309,7 @@ class CameraFragment : Fragment(), Injectable {
 
         // Create a capture session using the predefined targets; this also involves defining the
         // session state callback to be notified of when the session is ready
-        device.createCaptureSession(targets, object: CameraCaptureSession.StateCallback() {
+        device.createCaptureSession(targets, object : CameraCaptureSession.StateCallback() {
 
             override fun onConfigured(session: CameraCaptureSession) = cont.resume(session)
 
@@ -315,7 +331,8 @@ class CameraFragment : Fragment(), Injectable {
 
         // Flush any images left in the image reader
         @Suppress("ControlFlowWithEmptyBody")
-        while (imageReader.acquireNextImage() != null) {}
+        while (imageReader.acquireNextImage() != null) {
+        }
 
         // Start a new image queue
         val imageQueue = ArrayBlockingQueue<Image>(IMAGE_BUFFER_SIZE)
@@ -365,7 +382,7 @@ class CameraFragment : Fragment(), Injectable {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
                                 image.format != ImageFormat.DEPTH_JPEG &&
                                 image.timestamp != resultTimestamp) continue
-                         Log.d(TAG, "Matching image dequeued: ${image.timestamp}")
+                        Log.d(TAG, "Matching image dequeued: ${image.timestamp}")
 
                         // Unset the image reader listener
                         imageReaderHandler.removeCallbacks(timeoutRunnable)
@@ -391,6 +408,18 @@ class CameraFragment : Fragment(), Injectable {
                 }
             }
         }, cameraHandler)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK && requestCode == _pickImageRequestCode) {
+            val imageUri = data?.data.toString()
+
+            // Display the photo taken to user
+            lifecycleScope.launch(Dispatchers.Main) {
+                navController.navigate(CameraFragmentDirections.actionCameraToJpegViewer(imageUri))
+            }
+        }
     }
 
     /** Helper function used to save a [CombinedCaptureResult] into a [File] */

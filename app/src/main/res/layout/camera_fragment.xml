@@ -15,10 +15,20 @@
         android:layout_height="match_parent"
         android:foreground="@android:color/transparent" />
 
+
+    <ImageButton
+        android:id="@+id/gallery_button"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:layout_gravity="top"
+        android:background="@drawable/ic_gallery"/>
+
     <ImageButton
         android:id="@+id/capture_button"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_gravity="bottom|center"
         android:scaleType="fitCenter"
         android:background="@drawable/ic_shutter"

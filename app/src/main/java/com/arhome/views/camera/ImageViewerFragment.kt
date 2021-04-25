@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.arhome.R
 import com.arhome.databinding.ImageViewerFragmentBinding
@@ -16,9 +19,14 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import kotlinx.android.synthetic.main.image_viewer_fragment.*
 import kotlinx.android.synthetic.main.image_viewer_fragment.view.*
 
 class ImageViewerFragment : Fragment() {
+
+    private val navController: NavController by lazy {
+        findNavController()
+    }
 
     /** AndroidX navigation arguments */
     private val args: ImageViewerFragmentArgs by navArgs()
@@ -47,6 +55,10 @@ class ImageViewerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        back_to_previous_button.setOnClickListener {
+            findNavController().popBackStack()
+        }
 
         Glide.with(view.imageViewer).load(args.filePath).listener(object : RequestListener<Drawable> {
 

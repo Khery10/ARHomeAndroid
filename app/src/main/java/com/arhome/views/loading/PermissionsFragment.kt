@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.arhome.R
 import com.arhome.utils.network.NetworkConnectivity
 
@@ -54,8 +55,7 @@ class PermissionsFragment : Fragment() {
         if (requestCode == PERMISSIONS_REQUEST_CODE) {
             if (grantResults.all { res -> res == PackageManager.PERMISSION_GRANTED }) {
                 // Takes the user to the success fragment when permission is granted
-                Navigation.findNavController(requireActivity(), R.id.fragment_container).navigate(
-                        PermissionsFragmentDirections.actionPermissionsToLoading())
+                findNavController().navigate(PermissionsFragmentDirections.actionPermissionsToLoading())
             } else {
                 Toast.makeText(context, "Permission request denied", Toast.LENGTH_LONG).show()
             }

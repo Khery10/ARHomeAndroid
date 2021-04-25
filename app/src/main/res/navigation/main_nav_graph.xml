@@ -29,6 +29,50 @@
 
     <fragment
         android:id="@+id/menuFragment"
-        android:name="com.arhome.views.menu.MenuFragment" />
+        android:name="com.arhome.views.menu.MenuFragment">
+
+        <action
+            android:id="@+id/menu_to_camera"
+            app:destination="@id/camera_fragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/camera_fragment"
+        android:name="com.arhome.views.camera.CameraFragment"
+        android:label="Camera" >
+
+
+        <action
+            android:id="@+id/action_camera_to_jpeg_viewer"
+            app:launchSingleTop="true"
+            app:destination="@id/image_viewer_fragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/image_viewer_fragment"
+        android:name="com.arhome.views.camera.ImageViewerFragment"
+        android:label="Image Viewer" >
+
+        <argument
+            android:name="file_path"
+            app:argType="string"
+            app:nullable="false"/>
+
+        <argument
+            android:name="orientation"
+            app:argType="integer"
+            android:defaultValue="0" />
+
+        <argument
+            android:name="depth"
+            app:argType="boolean"
+            android:defaultValue="false" />
+
+        <action
+            android:id="@+id/action_image_viewer_back_to_camera"
+            app:launchSingleTop="true"
+            app:destination="@id/camera_fragment" />
+    </fragment>
 
 </navigation>

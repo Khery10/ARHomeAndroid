@@ -30,10 +30,10 @@ import android.view.ViewGroup
 import androidx.core.graphics.drawable.toDrawable
 import androidx.exifinterface.media.ExifInterface
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.arhome.utils.camera.computeExifOrientation
 import com.arhome.utils.camera.getPreviewOutputSize
 import com.arhome.utils.camera.AutoFitSurfaceView
@@ -42,7 +42,8 @@ import com.arhome.R
 import com.arhome.camera.interfaces.CameraInfo
 import com.arhome.camera.interfaces.ICameraProvider
 import com.arhome.di.Injectable
-import com.arhome.views.CameraActivity
+import com.arhome.utils.io.createFile
+import com.arhome.views.MainActivity
 import kotlinx.android.synthetic.main.camera_fragment.*
 import kotlinx.android.synthetic.main.camera_fragment.view.*
 import kotlinx.coroutines.Dispatchers
@@ -70,7 +71,7 @@ class CameraFragment : Fragment(), Injectable {
 
     /** Host's navigation controller */
     private val navController: NavController by lazy {
-        Navigation.findNavController(requireActivity(), R.id.fragment_container)
+        findNavController()
     }
 
     /** Detects, characterizes, and connects to a CameraDevice (used for all camera operations) */
@@ -106,7 +107,7 @@ class CameraFragment : Fragment(), Injectable {
             overlay.postDelayed({
                 // Remove white flash animation
                 overlay.background = null
-            }, CameraActivity.ANIMATION_FAST_MILLIS)
+            }, ANIMATION_FAST_MILLIS)
         }
     }
 
@@ -153,9 +154,12 @@ class CameraFragment : Fragment(), Injectable {
         }
 
         gallery_button.setOnClickListener {
-            _loadingFromGallery = true
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             startActivityForResult(gallery, _pickImageRequestCode)
+        }
+
+        back_to_previous_button.setOnClickListener {
+            findNavController().popBackStack()
         }
 
         viewFinder.holder.addCallback(object : SurfaceHolder.Callback {
@@ -170,7 +174,7 @@ class CameraFragment : Fragment(), Injectable {
             override fun surfaceCreated(holder: SurfaceHolder) {
 
                 //Don`t repeat initializing camera, if load from gallery
-                if(_loadingFromGallery)
+                if (_loadingFromGallery)
                     return
 
                 // Selects appropriate preview size and configures view finder
@@ -413,6 +417,7 @@ class CameraFragment : Fragment(), Injectable {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK && requestCode == _pickImageRequestCode) {
+            _loadingFromGallery = true
             val imageUri = data?.data.toString()
 
             // Display the photo taken to user
@@ -486,6 +491,9 @@ class CameraFragment : Fragment(), Injectable {
         /** Maximum time allowed to wait for the result of an image capture */
         private const val IMAGE_CAPTURE_TIMEOUT_MILLIS: Long = 5000
 
+        /** Milliseconds used for UI animations */
+        private const val ANIMATION_FAST_MILLIS = 50L
+
         /** Helper data class used to hold capture metadata with their associated image */
         data class CombinedCaptureResult(
                 val image: Image,
@@ -494,16 +502,6 @@ class CameraFragment : Fragment(), Injectable {
                 val format: Int
         ) : Closeable {
             override fun close() = image.close()
-        }
-
-        /**
-         * Create a [File] named a using formatted timestamp with the current date and time.
-         *
-         * @return [File] created.
-         */
-        private fun createFile(context: Context, extension: String): File {
-            val sdf = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_SSS", Locale.US)
-            return File(context.filesDir, "IMG_${sdf.format(Date())}.$extension")
         }
     }
 }

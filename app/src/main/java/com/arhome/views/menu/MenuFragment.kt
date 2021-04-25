@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.arhome.R
-import com.arhome.views.CameraActivity
 import com.arhome.views.menu.categories.CategoryFragment
 import kotlinx.android.synthetic.main.menu_fragment.*
 import kotlinx.android.synthetic.main.menu_fragment.view.*
@@ -46,6 +46,6 @@ class MenuFragment : Fragment() {
     }
 
     private fun gotoCamera(){
-        startActivity(Intent(activity, CameraActivity::class.java))
+        findNavController().navigate(MenuFragmentDirections.menuToCamera())
     }
 }

@@ -33,9 +33,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name="com.arhome.views.CameraActivity"
-            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

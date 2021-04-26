@@ -22,8 +22,8 @@
 
         <ImageButton
             android:id="@+id/back_to_previous_button"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
@@ -34,8 +34,8 @@
 
         <ImageButton
             android:id="@+id/gallery_button"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="5dp"

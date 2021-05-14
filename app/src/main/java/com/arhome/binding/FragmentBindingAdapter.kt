@@ -3,6 +3,7 @@ package com.arhome.binding
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
+import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
@@ -19,6 +20,15 @@ class FragmentBindingAdapter constructor(val fragment: Fragment) {
     @BindingAdapter(value = ["imageUrl"], requireAll = false)
     fun bindImage(imageView: ImageView, url: String?) {
         Glide.with(fragment).load(url).into(imageView)
+    }
+
+    companion object {
+
+        @JvmStatic
+        @BindingAdapter("visibleGone")
+        fun showHide(view: View, show: Boolean) {
+            view.visibility = if (show) View.VISIBLE else View.GONE
+        }
     }
 
 }

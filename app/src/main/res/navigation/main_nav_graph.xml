@@ -34,6 +34,27 @@
         <action
             android:id="@+id/menu_to_camera"
             app:destination="@id/camera_fragment"/>
+
+        <action
+            android:id="@+id/menu_to_products"
+            app:destination="@+id/products_fragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/products_fragment"
+        android:name="com.arhome.views.menu.products.ProductsFragment">
+
+        <argument
+            android:name="categoryId"
+            app:argType="integer"
+            android:defaultValue="0" />
+
+        <argument
+            android:name="categoryTitle"
+            app:argType="string"
+            app:nullable="false"/>
+
     </fragment>
 
     <fragment

@@ -12,4 +12,6 @@
 
     <string name="retry">Retry</string>
 
+    <string name="notFound">Ничего не найдено</string>
+
 </resources>

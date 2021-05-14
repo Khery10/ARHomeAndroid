@@ -2,6 +2,8 @@ package com.arhome.di
 
 import android.app.Application
 import com.arhome.DesignerApp
+import com.arhome.di.modules.ActivityModule
+import com.arhome.di.modules.AppModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule

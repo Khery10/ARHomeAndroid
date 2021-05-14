@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.arhome.R
 import com.arhome.databinding.ImageViewerFragmentBinding
-import com.arhome.utils.io.saveJpgImageToGallery
+import com.arhome.utils.io.saveJpgImageToDCIM
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -21,6 +21,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import kotlinx.android.synthetic.main.image_viewer_fragment.*
 import kotlinx.android.synthetic.main.image_viewer_fragment.view.*
+import java.io.File
 
 class ImageViewerFragment : Fragment() {
 
@@ -90,7 +91,7 @@ class ImageViewerFragment : Fragment() {
     private fun saveImageView() {
 
         if (!_saved) {
-            saveJpgImageToGallery(requireContext(), _args.filePath)
+            saveJpgImageToDCIM(requireContext(), File(_args.filePath))
 
             _saved = true
             Toast.makeText(requireContext(), "Saved", Toast.LENGTH_SHORT).show()

@@ -13,7 +13,7 @@ import com.arhome.databinding.CatalogItemBinding
 class CatalogItemsAdapter(
         private val dataBindingComponent: FragmentDataBindingComponent,
         appExecutors: AppExecutors,
-        private val callback: (() -> Unit)?)
+        private val callback: ((ITextImageData) -> Unit)?)
     : DataBoundListAdapter<ITextImageData, CatalogItemBinding>(
         appExecutors = appExecutors,
         diffCallback = object : DiffUtil.ItemCallback<ITextImageData>() {
@@ -37,7 +37,7 @@ class CatalogItemsAdapter(
 
         binding.root.setOnClickListener {
             binding.item?.let {
-                callback?.invoke()
+                callback?.invoke(it)
             }
         }
 

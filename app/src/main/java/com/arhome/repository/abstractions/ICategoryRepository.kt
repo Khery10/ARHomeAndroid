@@ -7,5 +7,4 @@ import com.arhome.utils.repo.Resource
 interface ICategoryRepository {
 
      fun getCategoriesList(): LiveData<Resource<List<Category>>>
-
 }

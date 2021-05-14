@@ -32,7 +32,6 @@ import androidx.exifinterface.media.ExifInterface
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.arhome.utils.camera.computeExifOrientation
 import com.arhome.utils.camera.getPreviewOutputSize
@@ -42,10 +41,8 @@ import com.arhome.R
 import com.arhome.camera.interfaces.CameraInfo
 import com.arhome.camera.interfaces.ICameraProvider
 import com.arhome.di.Injectable
-import com.arhome.utils.io.createFile
-import com.arhome.views.MainActivity
+import com.arhome.utils.io.createImageFile
 import kotlinx.android.synthetic.main.camera_fragment.*
-import kotlinx.android.synthetic.main.camera_fragment.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -53,11 +50,8 @@ import java.io.Closeable
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.text.SimpleDateFormat
 import java.util.concurrent.ArrayBlockingQueue
 import java.util.concurrent.TimeoutException
-import java.util.Date
-import java.util.Locale
 import javax.inject.Inject
 import kotlin.RuntimeException
 import kotlin.coroutines.resume
@@ -436,7 +430,7 @@ class CameraFragment : Fragment(), Injectable {
                 val buffer = result.image.planes[0].buffer
                 val bytes = ByteArray(buffer.remaining()).apply { buffer.get(this) }
                 try {
-                    val output = createFile(requireContext(), "jpg")
+                    val output = createImageFile(requireContext(), "jpg")
                     FileOutputStream(output).use { it.write(bytes) }
                     cont.resume(output)
                 } catch (exc: IOException) {
@@ -449,7 +443,7 @@ class CameraFragment : Fragment(), Injectable {
             ImageFormat.RAW_SENSOR -> {
                 val dngCreator = DngCreator(cameraCharacteristics, result.metadata)
                 try {
-                    val output = createFile(requireContext(), "dng")
+                    val output = createImageFile(requireContext(), "dng")
                     FileOutputStream(output).use { dngCreator.writeImage(it, result.image) }
                     cont.resume(output)
                 } catch (exc: IOException) {

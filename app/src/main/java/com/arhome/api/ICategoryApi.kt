@@ -13,15 +13,4 @@ interface ICategoryApi {
     @GET("/api/Category/GetCategories")
     fun getCategoriesList() : LiveData<ApiResponse<List<Category>>>
 
-    companion object {
-        fun create(baseUrl: String): ICategoryApi {
-
-            return Retrofit.Builder()
-                    .baseUrl(baseUrl)
-                    .addCallAdapterFactory(LiveDataCallAdapterFactory())
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build()
-                    .create(ICategoryApi::class.java)
-        }
-    }
 }

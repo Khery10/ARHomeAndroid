@@ -1,10 +1,7 @@
 package com.arhome.data
 
-import java.util.*
-
 data class Product(
-        val id: UUID,
+        val id: Int,
         val name: String,
-        val type: Category,
-        val retailer: Retailer,
-        val imgUrl: String)
+        val categoryId: Int,
+        val imageUrl: String)

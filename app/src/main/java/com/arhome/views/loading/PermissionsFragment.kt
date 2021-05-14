@@ -14,7 +14,9 @@ import com.arhome.utils.network.NetworkConnectivity
 
 private const val PERMISSIONS_REQUEST_CODE = 10
 
-private val PERMISSIONS_REQUIRED = arrayOf(Manifest.permission.CAMERA)
+private val PERMISSIONS_REQUIRED = arrayOf(
+        Manifest.permission.CAMERA,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
 /**
  * This [Fragment] requests permissions and, once granted, it will navigate to the next fragment

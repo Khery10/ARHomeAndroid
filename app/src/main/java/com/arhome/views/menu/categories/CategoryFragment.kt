@@ -12,6 +12,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
 import com.arhome.AppExecutors
 import com.arhome.R
@@ -19,38 +20,29 @@ import com.arhome.binding.FragmentDataBindingComponent
 import com.arhome.databinding.CatalogFragmentBinding
 import com.arhome.di.Injectable
 import com.arhome.utils.repo.Resource
+import com.arhome.views.abstractions.FragmentWithViewModel
 import com.arhome.views.common.CatalogItemsAdapter
 import com.arhome.views.common.RetryCallback
+import com.arhome.views.menu.MenuFragmentDirections
 import kotlinx.android.synthetic.main.catalog_fragment.*
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
 import java.util.*
 import javax.inject.Inject
 
-class CategoryFragment : Fragment(), Injectable {
+class CategoryFragment : FragmentWithViewModel<CategoryViewModel, CatalogFragmentBinding>(
+        CategoryViewModel::class.java,
+        R.layout.catalog_fragment) {
 
     @Inject
     lateinit var appExecutors: AppExecutors
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private val categoriesViewModel: CategoryViewModel by viewModels {
-        viewModelFactory
-    }
-
-    lateinit var binding: CatalogFragmentBinding
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(
-                inflater,
-                R.layout.catalog_fragment,
-                container,
-                false
-        )
+
+        super.onCreateView(inflater, container, savedInstanceState)
 
         binding.retryCallback = object : RetryCallback {
             override fun retry() {
-                categoriesViewModel.retry()
+                viewModel.retry()
             }
         }
 
@@ -59,10 +51,13 @@ class CategoryFragment : Fragment(), Injectable {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        binding.resource = categoriesViewModel.categories as LiveData<Resource<Any>>
+        binding.resource = viewModel.categories as LiveData<Resource<Any>>
         binding.lifecycleOwner = viewLifecycleOwner
 
-        val adapter = CatalogItemsAdapter(FragmentDataBindingComponent(this), appExecutors) {}
+        val adapter = CatalogItemsAdapter(FragmentDataBindingComponent(this), appExecutors) {
+            findNavController().navigate(MenuFragmentDirections.menuToProducts(it.name).setCategoryId(it.id))
+        }
+
         binding.catalogItemList.adapter = adapter
 
         OverScrollDecoratorHelper.setUpOverScroll(catalog_item_list, OverScrollDecoratorHelper.ORIENTATION_VERTICAL)
@@ -77,7 +72,7 @@ class CategoryFragment : Fragment(), Injectable {
 
     private fun initCategories(adapter: CatalogItemsAdapter) {
 
-        categoriesViewModel.categories.observe(viewLifecycleOwner, {
+        viewModel.categories.observe(viewLifecycleOwner, {
             adapter.submitList(it?.data)
         })
     }

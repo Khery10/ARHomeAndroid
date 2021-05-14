@@ -10,7 +10,7 @@ import com.arhome.utils.api.ApiSuccessResponse
 import com.arhome.utils.repo.Resource
 
 
-abstract class NetworkBoundResource<ResultType> {
+class NetworkBoundResource<ResultType>(val call: () -> LiveData<ApiResponse<ResultType>>) {
 
     private val result = MediatorLiveData<Resource<ResultType>>()
 
@@ -52,5 +52,5 @@ abstract class NetworkBoundResource<ResultType> {
 
 
     @MainThread
-    protected abstract fun createCall(): LiveData<ApiResponse<ResultType>>
+    protected fun createCall(): LiveData<ApiResponse<ResultType>> = call()
 }

@@ -1,4 +1,4 @@
-package com.arhome.di
+package com.arhome.di.modules
 
 import com.arhome.views.MainActivity
 import dagger.Module

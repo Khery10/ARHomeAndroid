@@ -1,12 +1,10 @@
 package com.arhome.views.menu.products
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.switchMap
+import androidx.lifecycle.*
 import com.arhome.data.Category
 import com.arhome.repository.abstractions.IProductRepository
 import com.arhome.utils.lifecycle.AbsentLiveData
+import com.arhome.utils.repo.ResourceStatus
 import javax.inject.Inject
 
 class ProductsViewModel @Inject constructor(productRepository: IProductRepository) : ViewModel() {
@@ -22,6 +20,10 @@ class ProductsViewModel @Inject constructor(productRepository: IProductRepositor
         } else {
             productRepository.getProductsByCategoryId(categoryId)
         }
+    }
+
+    val isEmpty = products.map { resource ->
+        resource.status == ResourceStatus.SUCCESS && (resource.data?.isEmpty() ?: true)
     }
 
     fun setCategory(category: Category) {

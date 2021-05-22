@@ -11,7 +11,6 @@ import com.arhome.binding.FragmentDataBindingComponent
 import com.arhome.data.Category
 import com.arhome.databinding.ProductsFragmentBinding
 import com.arhome.views.abstractions.FragmentWithViewModel
-import kotlinx.android.synthetic.main.image_viewer_fragment.*
 import kotlinx.android.synthetic.main.products_fragment.*
 import kotlinx.android.synthetic.main.products_fragment.back_to_previous_button
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
@@ -59,6 +58,5 @@ class ProductsFragment : FragmentWithViewModel<ProductsViewModel, ProductsFragme
     private fun initButtons(){
 
         back_to_previous_button.setOnClickListener { findNavController().popBackStack() }
-
     }
 }

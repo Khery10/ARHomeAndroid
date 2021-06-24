@@ -47,8 +47,7 @@
 
         <argument
             android:name="categoryId"
-            app:argType="integer"
-            android:defaultValue="0" />
+            app:argType="string" />
 
         <argument
             android:name="categoryTitle"
@@ -72,7 +71,7 @@
 
     <fragment
         android:id="@+id/image_viewer_fragment"
-        android:name="com.arhome.views.camera.ImageViewerFragment"
+        android:name="com.arhome.views.segmentation.SegmentationViewerFragment"
         android:label="Image Viewer" >
 
         <argument

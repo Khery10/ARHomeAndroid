@@ -22,12 +22,19 @@ class FragmentBindingAdapter constructor(val fragment: Fragment) {
         Glide.with(fragment).load(url).into(imageView)
     }
 
+
     companion object {
 
         @JvmStatic
         @BindingAdapter("visibleGone")
         fun showHide(view: View, show: Boolean) {
             view.visibility = if (show) View.VISIBLE else View.GONE
+        }
+
+        @JvmStatic
+        @BindingAdapter(value = ["imageContent"])
+        fun loadImage(view: View, content: ByteArray?) {
+            Glide.with(view.context).load(content).into(view as ImageView)
         }
     }
 

@@ -55,7 +55,7 @@ class CategoryFragment : FragmentWithViewModel<CategoryViewModel, CatalogFragmen
         binding.lifecycleOwner = viewLifecycleOwner
 
         val adapter = CatalogItemsAdapter(FragmentDataBindingComponent(this), appExecutors) {
-            findNavController().navigate(MenuFragmentDirections.menuToProducts(it.name).setCategoryId(it.id))
+            findNavController().navigate(MenuFragmentDirections.menuToProducts(it.id.toString(), it.name))
         }
 
         binding.catalogItemList.adapter = adapter

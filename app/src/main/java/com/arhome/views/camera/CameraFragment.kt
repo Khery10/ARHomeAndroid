@@ -4,43 +4,35 @@ import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
+import android.database.Cursor
 import android.graphics.Color
 import android.graphics.ImageFormat
-import android.hardware.camera2.CameraCaptureSession
-import android.hardware.camera2.CameraCharacteristics
-import android.hardware.camera2.CameraDevice
-import android.hardware.camera2.CameraManager
-import android.hardware.camera2.CaptureRequest
-import android.hardware.camera2.CaptureResult
-import android.hardware.camera2.DngCreator
-import android.hardware.camera2.TotalCaptureResult
+import android.hardware.camera2.*
 import android.media.Image
 import android.media.ImageReader
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
 import android.provider.MediaStore
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.Surface
-import android.view.SurfaceHolder
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.core.graphics.drawable.toDrawable
 import androidx.exifinterface.media.ExifInterface
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.arhome.utils.camera.computeExifOrientation
-import com.arhome.utils.camera.getPreviewOutputSize
-import com.arhome.utils.camera.AutoFitSurfaceView
-import com.arhome.utils.camera.OrientationLiveData
 import com.arhome.R
 import com.arhome.camera.interfaces.CameraInfo
 import com.arhome.camera.interfaces.ICameraProvider
 import com.arhome.di.Injectable
+import com.arhome.utils.camera.AutoFitSurfaceView
+import com.arhome.utils.camera.OrientationLiveData
+import com.arhome.utils.camera.computeExifOrientation
+import com.arhome.utils.camera.getPreviewOutputSize
+import com.arhome.utils.io.FileUrlUtils
 import com.arhome.utils.io.createImageFile
 import kotlinx.android.synthetic.main.camera_fragment.*
 import kotlinx.coroutines.Dispatchers
@@ -53,7 +45,6 @@ import java.io.IOException
 import java.util.concurrent.ArrayBlockingQueue
 import java.util.concurrent.TimeoutException
 import javax.inject.Inject
-import kotlin.RuntimeException
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
@@ -410,9 +401,10 @@ class CameraFragment : Fragment(), Injectable {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK && requestCode == _pickImageRequestCode) {
+        if (resultCode == RESULT_OK && requestCode == _pickImageRequestCode && data != null) {
             _loadingFromGallery = true
-            val imageUri = data?.data.toString()
+
+            val imageUri = FileUrlUtils.getRealPathFromURI(this.requireContext(), data.data!!)
 
             // Display the photo taken to user
             lifecycleScope.launch(Dispatchers.Main) {

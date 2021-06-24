@@ -6,10 +6,13 @@
     <data>
 
         <import type="androidx.lifecycle.LiveData" />
+        <import type="com.arhome.segmentation.SegmentedImage" />
+        <import type="com.arhome.utils.repo.Resource" />
+        <import type="com.arhome.utils.repo.ResourceStatus" />
 
         <variable
-            name="loaded"
-            type="LiveData&lt;Boolean>" />
+            name="segmentedImage"
+            type="LiveData&lt;Resource&lt;SegmentedImage>>" />
     </data>
 
 
@@ -21,12 +24,13 @@
         <ImageView
             android:id="@+id/imageViewer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            app:imageContent="@{segmentedImage.data.content}"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:visibleGone="@{loaded}">
+            app:visibleGone="@{segmentedImage.status == ResourceStatus.SUCCESS}">
 
             <ImageButton
                 android:id="@+id/back_to_previous_button"
@@ -59,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            app:isLoading="@{!loaded}" />
+            app:isLoading="@{segmentedImage.status == ResourceStatus.LOADING}" />
 
     </FrameLayout>
 

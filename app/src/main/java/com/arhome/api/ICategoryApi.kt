@@ -10,7 +10,7 @@ import  retrofit2.http.*
 
 interface ICategoryApi {
 
-    @GET("/api/Category/GetCategories")
+    @GET("/api/categories")
     fun getCategoriesList() : LiveData<ApiResponse<List<Category>>>
 
 }

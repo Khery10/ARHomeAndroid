@@ -14,6 +14,7 @@ import com.arhome.views.abstractions.FragmentWithViewModel
 import kotlinx.android.synthetic.main.products_fragment.*
 import kotlinx.android.synthetic.main.products_fragment.back_to_previous_button
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
+import java.util.*
 import javax.inject.Inject
 
 class ProductsFragment : FragmentWithViewModel<ProductsViewModel, ProductsFragmentBinding>(
@@ -27,7 +28,7 @@ class ProductsFragment : FragmentWithViewModel<ProductsViewModel, ProductsFragme
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        viewModel.setCategory(Category(_args.categoryId, _args.categoryTitle, null))
+        viewModel.setCategory(Category(UUID.fromString(_args.categoryId), _args.categoryTitle, null, null))
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner

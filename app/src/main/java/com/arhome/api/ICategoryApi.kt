@@ -11,6 +11,9 @@ import  retrofit2.http.*
 interface ICategoryApi {
 
     @GET("/api/categories")
-    fun getCategoriesList() : LiveData<ApiResponse<List<Category>>>
+    fun getCategoriesList(): LiveData<ApiResponse<Array<Category>>>
+
+    @GET("/api/categories/surfaceTypes/{surface}")
+    fun getCategoriesBySurface(@Path("surface") surface: String): LiveData<ApiResponse<Array<Category>>>
 
 }

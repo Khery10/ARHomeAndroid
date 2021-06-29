@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.arhome.di.ViewModelKey
 import com.arhome.viewModel.AppViewModelFactory
-import com.arhome.views.menu.categories.CategoryViewModel
+import com.arhome.views.menu.categories.CategoriesViewModel
 import com.arhome.views.menu.products.ProductsViewModel
 import com.arhome.views.segmentation.SegmentationViewModel
 import dagger.Binds
@@ -16,8 +16,8 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(CategoryViewModel::class)
-    abstract fun bindCategoryViewMode(categoryViewModel: CategoryViewModel): ViewModel
+    @ViewModelKey(CategoriesViewModel::class)
+    abstract fun bindCategoryViewMode(categoryViewModel: CategoriesViewModel): ViewModel
 
     @Binds
     @IntoMap

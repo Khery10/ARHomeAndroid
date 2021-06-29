@@ -7,22 +7,22 @@ import androidx.recyclerview.widget.DiffUtil
 import com.arhome.AppExecutors
 import com.arhome.R
 import com.arhome.binding.FragmentDataBindingComponent
-import com.arhome.data.abstractions.ITextImageData
+import com.arhome.data.abstractions.ITitleData
 import com.arhome.databinding.CatalogItemBinding
 
 class CatalogItemsAdapter(
         private val dataBindingComponent: FragmentDataBindingComponent,
         appExecutors: AppExecutors,
-        private val callback: ((ITextImageData) -> Unit)?)
-    : DataBoundListAdapter<ITextImageData, CatalogItemBinding>(
+        private val imageUrlProvider: ((ITitleData) -> String),
+        private val callback: ((ITitleData) -> Unit)?)
+
+    : DataBoundListAdapter<ITitleData, CatalogItemBinding>(
         appExecutors = appExecutors,
-        diffCallback = object : DiffUtil.ItemCallback<ITextImageData>() {
+        diffCallback = object : DiffUtil.ItemCallback<ITitleData>() {
 
-            override fun areItemsTheSame(oldItem: ITextImageData, newItem: ITextImageData)
-                    = oldItem.id == newItem.id
+            override fun areItemsTheSame(oldItem: ITitleData, newItem: ITitleData) = oldItem.id == newItem.id
 
-            override fun areContentsTheSame(oldItem: ITextImageData, newItem: ITextImageData)
-                    = oldItem.imageUrl == newItem.imageUrl && oldItem.name == newItem.name
+            override fun areContentsTheSame(oldItem: ITitleData, newItem: ITitleData) = oldItem.name == newItem.name
 
         }
 ) {
@@ -44,7 +44,8 @@ class CatalogItemsAdapter(
         return binding
     }
 
-    override fun bind(binding: CatalogItemBinding, item: ITextImageData) {
+    override fun bind(binding: CatalogItemBinding, item: ITitleData) {
         binding.item = item
+        binding.imageUrl = imageUrlProvider(item)
     }
 }

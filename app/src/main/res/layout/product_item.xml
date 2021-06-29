@@ -10,6 +10,10 @@
             name="item"
             type="com.arhome.data.Product" />
 
+        <variable
+            name="productImgUrl"
+            type="String" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,7 +25,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="10dp"
-            app:imageUrl="@{item.imageUrl}"
+            app:imageUrl="@{productImgUrl}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 

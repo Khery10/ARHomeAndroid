@@ -5,36 +5,40 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.transition.TransitionInflater
 import com.arhome.AppExecutors
 import com.arhome.R
+import com.arhome.api.ApiBuilder
 import com.arhome.binding.FragmentDataBindingComponent
+import com.arhome.data.SurfaceType
 import com.arhome.databinding.CatalogFragmentBinding
-import com.arhome.di.Injectable
 import com.arhome.utils.repo.Resource
+import com.arhome.utils.repo.ResourceStatus
 import com.arhome.views.abstractions.FragmentWithViewModel
 import com.arhome.views.common.CatalogItemsAdapter
 import com.arhome.views.common.RetryCallback
 import com.arhome.views.menu.MenuFragmentDirections
 import kotlinx.android.synthetic.main.catalog_fragment.*
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
-import java.util.*
 import javax.inject.Inject
 
-class CategoryFragment : FragmentWithViewModel<CategoryViewModel, CatalogFragmentBinding>(
-        CategoryViewModel::class.java,
-        R.layout.catalog_fragment) {
+
+class CategoriesFragment : FragmentWithViewModel<CategoriesViewModel, CatalogFragmentBinding> {
+
+    constructor() : this(SurfaceType.All)
+
+    constructor(surface: SurfaceType) : super(CategoriesViewModel::class.java, R.layout.catalog_fragment) {
+        surfaceType = surface
+    }
+
+    private val surfaceType: SurfaceType
 
     @Inject
     lateinit var appExecutors: AppExecutors
+
+    @Inject
+    lateinit var apiBuilder: ApiBuilder
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -51,12 +55,15 @@ class CategoryFragment : FragmentWithViewModel<CategoryViewModel, CatalogFragmen
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        binding.surface = surfaceType
         binding.resource = viewModel.categories as LiveData<Resource<Any>>
         binding.lifecycleOwner = viewLifecycleOwner
 
-        val adapter = CatalogItemsAdapter(FragmentDataBindingComponent(this), appExecutors) {
-            findNavController().navigate(MenuFragmentDirections.menuToProducts(it.id.toString(), it.name))
-        }
+        val adapter = CatalogItemsAdapter(
+                FragmentDataBindingComponent(this),
+                appExecutors,
+                { apiBuilder.getCategoryAviconUrl(it.id) },
+                { findNavController().navigate(MenuFragmentDirections.menuToProducts(it.id.toString(), it.name)) })
 
         binding.catalogItemList.adapter = adapter
 
@@ -67,13 +74,17 @@ class CategoryFragment : FragmentWithViewModel<CategoryViewModel, CatalogFragmen
             startPostponedEnterTransition()
         }
 
-        initCategories(adapter)
+        viewModel.setSurface(surfaceType)
+        observeCategories(adapter)
     }
 
-    private fun initCategories(adapter: CatalogItemsAdapter) {
+    private fun observeCategories(adapter: CatalogItemsAdapter) {
 
         viewModel.categories.observe(viewLifecycleOwner, {
-            adapter.submitList(it?.data)
+
+            if (it.status == ResourceStatus.SUCCESS)
+                adapter.submitList(it?.data?.toList())
+
         })
     }
 }

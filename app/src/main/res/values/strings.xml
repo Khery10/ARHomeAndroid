@@ -4,8 +4,7 @@
 
     <string name="capture">Capture</string>
 
-    <string name="products">Товары</string>
-    <string name="retailers">Ритейлеры</string>
+    <string name="categories">Категории</string>
     <string name="collections">Подборки</string>
 
     <string name="ic_slider_dir">slider</string>
@@ -13,5 +12,8 @@
     <string name="retry">Retry</string>
 
     <string name="notFound">Ничего не найдено</string>
+
+    <string name="walls_title">Настенные покрытия</string>
+    <string name="floors_title">Напольные покрытия</string>
 
 </resources>

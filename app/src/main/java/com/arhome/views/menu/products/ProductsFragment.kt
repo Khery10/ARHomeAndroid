@@ -7,6 +7,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.arhome.AppExecutors
 import com.arhome.R
+import com.arhome.api.ApiBuilder
 import com.arhome.binding.FragmentDataBindingComponent
 import com.arhome.data.Category
 import com.arhome.databinding.ProductsFragmentBinding
@@ -24,17 +25,23 @@ class ProductsFragment : FragmentWithViewModel<ProductsViewModel, ProductsFragme
     @Inject
     lateinit var appExecutors: AppExecutors
 
+    @Inject
+    lateinit var apiBuilder: ApiBuilder
+
     private val _args: ProductsFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        viewModel.setCategory(Category(UUID.fromString(_args.categoryId), _args.categoryTitle, null, null))
+        viewModel.setCategory(Category(UUID.fromString(_args.categoryId), _args.categoryTitle, null))
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        val adapter = ProductItemAdapter(FragmentDataBindingComponent(this), appExecutors) {
-        }
+        val adapter = ProductItemAdapter(
+                FragmentDataBindingComponent(this),
+                appExecutors,
+                { apiBuilder.getProductAviconUrl(it.id) },
+                null)
 
         binding.productsList.adapter = adapter
 
@@ -56,7 +63,7 @@ class ProductsFragment : FragmentWithViewModel<ProductsViewModel, ProductsFragme
         })
     }
 
-    private fun initButtons(){
+    private fun initButtons() {
 
         back_to_previous_button.setOnClickListener { findNavController().popBackStack() }
     }

@@ -6,6 +6,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
 
 
 class ApiBuilder(val baseUrl: String) {
@@ -35,5 +36,13 @@ class ApiBuilder(val baseUrl: String) {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(classApi)
+    }
+
+    fun getCategoryAviconUrl(categoryId: UUID): String {
+        return "${baseUrl}api/categories/${categoryId}/avicon"
+    }
+
+    fun getProductAviconUrl(productId: UUID): String{
+        return "${baseUrl}api/products/${productId}/avicon"
     }
 }

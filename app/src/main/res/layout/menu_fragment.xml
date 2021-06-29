@@ -27,14 +27,8 @@
                 style="@style/MenuTextHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/products" />
+                android:text="@string/categories" />
 
-            <TextView
-                android:id="@+id/retailers"
-                style="@style/MenuTextHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/retailers" />
 
             <TextView
                 android:id="@+id/collections"

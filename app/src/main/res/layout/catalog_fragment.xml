@@ -7,16 +7,18 @@
     <data>
 
         <import type="androidx.lifecycle.LiveData" />
-
         <import type="com.arhome.utils.repo.Resource" />
-
         <import type="com.arhome.utils.repo.ResourceStatus" />
-
         <import type="com.arhome.views.common.RetryCallback" />
+        <import type="com.arhome.data.SurfaceType"/>
 
         <variable
             name="resource"
             type="LiveData&lt;Resource&lt;Object>>" />
+
+        <variable
+            name="surface"
+            type="SurfaceType" />
 
         <variable
             name="retryCallback"
@@ -27,7 +29,18 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/surface_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="25sp"
+            android:text="@{surface == SurfaceType.Wall ? @string/walls_title : (surface == SurfaceType.Floor ? @string/floors_title : null)}"/>
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -37,7 +50,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/surface_title"
             tools:listitem="@layout/catalog_item">
 
         </androidx.recyclerview.widget.RecyclerView>

@@ -7,7 +7,12 @@
 
         <variable
             name="item"
-            type="com.arhome.data.abstractions.ITextImageData" />
+            type="com.arhome.data.abstractions.ITitleData" />
+
+        <variable
+            name="imageUrl"
+            type="String" />
+
     </data>
 
     <RelativeLayout
@@ -19,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            app:imageUrl="@{item.imageUrl}">
+            app:imageUrl="@{imageUrl}">
 
         </ImageView>
 

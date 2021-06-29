@@ -1,6 +1,5 @@
 package com.arhome.views.menu
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.arhome.R
-import com.arhome.views.menu.categories.CategoryFragment
+import com.arhome.views.menu.categories.CategoriesFragment
 import kotlinx.android.synthetic.main.menu_fragment.*
 import kotlinx.android.synthetic.main.menu_fragment.view.*
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
@@ -19,7 +18,7 @@ class MenuFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater.inflate(R.layout.menu_fragment, container, false)
 
-        val creators = mapOf<Int, () -> Fragment>(0 to { CategoryFragment() })
+        val creators = mapOf<Int, () -> Fragment>(0 to { CategoriesFragment() })
         view.catalogs_viewer.apply {
             adapter = object : FragmentStateAdapter(this@MenuFragment) {
 

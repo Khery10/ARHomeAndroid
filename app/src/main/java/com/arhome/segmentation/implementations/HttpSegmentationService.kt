@@ -75,6 +75,9 @@ class HttpSegmentationService @Inject constructor(val api: ISegmentationApi) : I
     private fun getSegmentedImage(response: SegmentationResponse): SegmentedImage {
 
         val content = Base64.decode(response.image, Base64.DEFAULT)
-        return SegmentedImage(content)
+        val wall = Base64.decode(response.wall, Base64.DEFAULT)
+        val floor = Base64.decode(response.floor, Base64.DEFAULT)
+
+        return SegmentedImage(content, wall, floor)
     }
 }

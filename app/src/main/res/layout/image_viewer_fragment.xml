@@ -6,8 +6,11 @@
     <data>
 
         <import type="androidx.lifecycle.LiveData" />
+
         <import type="com.arhome.segmentation.SegmentedImage" />
+
         <import type="com.arhome.utils.repo.Resource" />
+
         <import type="com.arhome.utils.repo.ResourceStatus" />
 
         <variable
@@ -21,11 +24,23 @@
         android:layout_height="match_parent"
         android:background="@color/black">
 
-        <ImageView
-            android:id="@+id/imageViewer"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:imageContent="@{segmentedImage.data.content}"/>
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageViewer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:imageContent="@{segmentedImage.data.imageContent}" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -57,6 +72,11 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/catalogContainer" />
 
         <include
             layout="@layout/loading_progress_bar"

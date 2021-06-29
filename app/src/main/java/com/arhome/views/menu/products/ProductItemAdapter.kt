@@ -14,6 +14,7 @@ import com.arhome.views.common.DataBoundListAdapter
 class ProductItemAdapter(
         private val dataBindingComponent: FragmentDataBindingComponent,
         appExecutors: AppExecutors,
+        private val productImgUrlProvider: ((Product) -> String),
         private val callback: (() -> Unit)?)
     : DataBoundListAdapter<Product, ProductItemBinding>(
         appExecutors = appExecutors,
@@ -21,7 +22,7 @@ class ProductItemAdapter(
 
             override fun areItemsTheSame(oldItem: Product, newItem: Product) = oldItem.id == newItem.id
 
-            override fun areContentsTheSame(oldItem: Product, newItem: Product) = oldItem.imageUrl == newItem.imageUrl && oldItem.name == newItem.name
+            override fun areContentsTheSame(oldItem: Product, newItem: Product) = oldItem.name == newItem.name && oldItem.categoryId == newItem.categoryId
 
         }
 ) {
@@ -45,5 +46,6 @@ class ProductItemAdapter(
 
     override fun bind(binding: ProductItemBinding, item: Product) {
         binding.item = item
+        binding.productImgUrl = productImgUrlProvider(item)
     }
 }

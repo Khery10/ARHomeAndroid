@@ -9,11 +9,11 @@ class SegmentedImage(
         private val wallMaskContent: ByteArray,
         private val floorMaskContent: ByteArray) {
 
-    private val wallMask: Bitmap by lazy {
+    val wallMask: Bitmap by lazy {
         BitmapFactory.decodeByteArray(wallMaskContent, 0, wallMaskContent.size)
     }
 
-    private val floorMask: Bitmap by lazy {
+    val floorMask: Bitmap by lazy {
         BitmapFactory.decodeByteArray(floorMaskContent, 0, floorMaskContent.size)
     }
 

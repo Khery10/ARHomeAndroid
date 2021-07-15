@@ -17,11 +17,6 @@ import java.net.URL
 
 class FragmentBindingAdapter constructor(val fragment: Fragment) {
 
-    @BindingAdapter(value = ["imageUrl"], requireAll = false)
-    fun bindImage(imageView: ImageView, url: String?) {
-        Glide.with(fragment).load(url).into(imageView)
-    }
-
 
     companion object {
 
@@ -35,6 +30,12 @@ class FragmentBindingAdapter constructor(val fragment: Fragment) {
         @BindingAdapter(value = ["imageContent"])
         fun loadImage(view: View, content: ByteArray?) {
             Glide.with(view.context).load(content).into(view as ImageView)
+        }
+
+        @JvmStatic
+        @BindingAdapter(value = ["imageUrl"], requireAll = false)
+        fun bindImage(view: View, url: String?) {
+            Glide.with(view.context).load(url).into(view as ImageView)
         }
     }
 

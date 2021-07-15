@@ -3,4 +3,6 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="gray_for_lines">#EAEAEA</color>
+    <color name="header_selected_blue">#0057AE</color>
+    <color name="header_non_selected_header">#ABBDCE</color>
 </resources>

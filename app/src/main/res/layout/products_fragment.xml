@@ -32,20 +32,19 @@
                 android:id="@+id/back_to_previous_button"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
                 android:background="@drawable/ic_back_black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
             <TextView
                 android:id="@+id/products_header_title"
                 style="@style/ProductsHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@{viewModel.categoryTitle}"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:text="@{viewModel.categoryTitle}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +52,7 @@
 
             <View
                 android:layout_width="0dp"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:background="@color/gray_for_lines"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -39,8 +39,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:textSize="25sp"
-            android:text="@{surface == SurfaceType.Wall ? @string/walls_title : (surface == SurfaceType.Floor ? @string/floors_title : null)}"/>
+            android:textSize="20sp"
+            android:text="@{surface == SurfaceType.Wall ? @string/walls_title : (surface == SurfaceType.Floor ? @string/floors_title : null)}"
+            app:visibleGone="@{surface != SurfaceType.All}"/>
 
 
         <androidx.recyclerview.widget.RecyclerView

@@ -38,6 +38,7 @@
             android:layout_height="wrap_content"
             android:singleLine="false"
             android:text="@{item.name}"
+            style="@style/product_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/catalog_item_img"
             app:layout_constraintBottom_toBottomOf="@id/catalog_item_img"

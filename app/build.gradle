@@ -20,7 +20,7 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility java_version
+        sourceCompatibility rootProject.ext.java_version
         targetCompatibility rootProject.ext.java_version
     }
 

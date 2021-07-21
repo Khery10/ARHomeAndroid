@@ -1,27 +1,27 @@
 package com.arhome.views.segmentation
 
 import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.MotionEvent
-import android.view.Surface
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.graphics.get
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.arhome.R
-import com.arhome.api.ApiBuilder
 import com.arhome.data.SurfaceType
 import com.arhome.databinding.ImageViewerFragmentBinding
 import com.arhome.segmentation.IImageRenderer
 import com.arhome.utils.io.saveJpgImageToDCIM
 import com.arhome.views.abstractions.FragmentWithViewModel
-import com.arhome.views.menu.categories.CategoriesFragment
 import kotlinx.android.synthetic.main.image_viewer_fragment.*
+import kotlinx.android.synthetic.main.image_viewer_fragment.view.*
 import java.io.File
 import javax.inject.Inject
 
@@ -35,6 +35,7 @@ class SegmentationViewerFragment : FragmentWithViewModel<SegmentationViewModel, 
     private val _args: SegmentationViewerFragmentArgs by navArgs()
     private var _saved = false
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -44,7 +45,6 @@ class SegmentationViewerFragment : FragmentWithViewModel<SegmentationViewModel, 
 
         back_to_previous_button.setOnClickListener { findNavController().popBackStack() }
         save_image_button.setOnClickListener { saveImage() }
-
 
         imageViewer.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
@@ -56,10 +56,10 @@ class SegmentationViewerFragment : FragmentWithViewModel<SegmentationViewModel, 
                 val y = event.y.toInt()
 
                 if (viewModel.data.value!!.data!!.isWall(x, y))
-                    changeColor(viewModel.data.value!!.data!!.wallMask, Color.YELLOW)
+                    showCategory(SurfaceType.Wall)
 
                 if (viewModel.data.value!!.data!!.isFloor(x, y))
-                    changeColor(viewModel.data.value!!.data!!.floorMask, Color.BLUE)
+                    showCategory(SurfaceType.Floor)
 
                 return false
             }
@@ -81,13 +81,13 @@ class SegmentationViewerFragment : FragmentWithViewModel<SegmentationViewModel, 
     }
 
     private fun showCategory(surface: SurfaceType) {
+
         requireActivity()!!.supportFragmentManager
                 .beginTransaction()
-                .add(R.id.catalogContainer, CategoriesFragment(surface))
-                .addToBackStack(null)
+                .setCustomAnimations(R.anim.pop_up_in, R.anim.fade_out, R.anim.fade_in, R.anim.pop_up_out)
+                .add(R.id.catalogContainer, SelectingSurfaceFragment(surface))
                 .commit()
     }
-
 
     private fun changeColor(mask: Bitmap, color: Int) {
 

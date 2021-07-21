@@ -13,7 +13,7 @@
             android:id="@+id/action_permissions_to_loading"
             app:destination="@id/loadingFragment"
             app:popUpTo="@id/permissions_fragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
@@ -22,7 +22,9 @@
 
         <action
             android:id="@+id/action_loading_to_menuFragment"
-            app:destination="@id/menuFragment" />
+            app:destination="@id/menuFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"/>
 
     </fragment>
 
@@ -33,11 +35,19 @@
 
         <action
             android:id="@+id/menu_to_camera"
-            app:destination="@id/camera_fragment"/>
+            app:destination="@id/camera_fragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
 
         <action
             android:id="@+id/menu_to_products"
-            app:destination="@+id/products_fragment"/>
+            app:destination="@+id/products_fragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
 
     </fragment>
 
@@ -65,7 +75,11 @@
         <action
             android:id="@+id/action_camera_to_jpeg_viewer"
             app:launchSingleTop="true"
-            app:destination="@id/image_viewer_fragment" />
+            app:destination="@id/image_viewer_fragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
 
     </fragment>
 

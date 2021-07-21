@@ -5,6 +5,7 @@ import com.arhome.views.menu.MenuFragment
 import com.arhome.views.menu.categories.CategoriesFragment
 import com.arhome.views.menu.products.ProductsFragment
 import com.arhome.views.segmentation.SegmentationViewerFragment
+import com.arhome.views.segmentation.SelectingSurfaceFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -25,4 +26,7 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeSegmentationViewerfragment(): SegmentationViewerFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeSelectingSurfaceFragment(): SelectingSurfaceFragment
 }

@@ -35,7 +35,7 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideSegmentationApi(): ISegmentationApi = apiBuilder.createApi(ISegmentationApi::class.java)
+    fun provideSegmentationApi(): ISegmentationApi = ApiBuilder("http://84.201.189.12:8000/").createApi(ISegmentationApi::class.java)
 
     @Singleton
     @Provides

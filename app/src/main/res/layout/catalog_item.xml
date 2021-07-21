@@ -22,7 +22,8 @@
         <ImageView
             android:id="@+id/catalog_item_img"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="250dp"
+            android:scaleType="center"
             android:layout_margin="10dp"
             app:imageUrl="@{imageUrl}">
 

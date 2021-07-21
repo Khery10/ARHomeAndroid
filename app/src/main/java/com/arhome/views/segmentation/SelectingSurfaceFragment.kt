@@ -1,4 +1,4 @@
-package com.arhome.views.menu.categories
+package com.arhome.views.segmentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,23 +12,23 @@ import com.arhome.R
 import com.arhome.api.ApiBuilder
 import com.arhome.binding.FragmentDataBindingComponent
 import com.arhome.data.SurfaceType
-import com.arhome.databinding.CatalogFragmentBinding
+import com.arhome.databinding.SelectSurfaceFragmentBinding
 import com.arhome.utils.repo.Resource
 import com.arhome.utils.repo.ResourceStatus
 import com.arhome.views.abstractions.FragmentWithViewModel
 import com.arhome.views.common.CatalogItemsAdapter
 import com.arhome.views.common.RetryCallback
 import com.arhome.views.menu.MenuFragmentDirections
+import com.arhome.views.menu.categories.CategoriesViewModel
 import kotlinx.android.synthetic.main.catalog_fragment.*
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
 import javax.inject.Inject
 
-
-class CategoriesFragment : FragmentWithViewModel<CategoriesViewModel, CatalogFragmentBinding> {
+class SelectingSurfaceFragment : FragmentWithViewModel<CategoriesViewModel, SelectSurfaceFragmentBinding> {
 
     constructor() : this(SurfaceType.All)
 
-    constructor(surface: SurfaceType) : super(CategoriesViewModel::class.java, R.layout.catalog_fragment) {
+    constructor(surface: SurfaceType) : super(CategoriesViewModel::class.java, R.layout.select_surface_fragment) {
         surfaceType = surface
     }
 

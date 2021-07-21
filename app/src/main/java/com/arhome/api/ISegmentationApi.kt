@@ -8,7 +8,7 @@ import retrofit2.http.POST
 
 interface ISegmentationApi {
 
-    @POST("/api/segmentation/defineSegments/")
+    @POST("/")
     fun defineSegments(@Body request: SegmentationRequest) : Call<SegmentationResponse>
 
 }

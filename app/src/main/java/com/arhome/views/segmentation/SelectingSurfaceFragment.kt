@@ -21,6 +21,8 @@ import com.arhome.views.common.RetryCallback
 import com.arhome.views.menu.MenuFragmentDirections
 import com.arhome.views.menu.categories.CategoriesViewModel
 import kotlinx.android.synthetic.main.catalog_fragment.*
+import kotlinx.android.synthetic.main.catalog_fragment.catalog_item_list
+import kotlinx.android.synthetic.main.select_surface_fragment.*
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
 import javax.inject.Inject
 
@@ -60,6 +62,8 @@ class SelectingSurfaceFragment : FragmentWithViewModel<CategoriesViewModel, Sele
         binding.resource = viewModel.categories as LiveData<Resource<Any>>
         binding.lifecycleOwner = viewLifecycleOwner
 
+        close_button.setOnClickListener { close() }
+
         val adapter = CatalogItemsAdapter(
                 FragmentDataBindingComponent(this),
                 appExecutors,
@@ -87,5 +91,13 @@ class SelectingSurfaceFragment : FragmentWithViewModel<CategoriesViewModel, Sele
                 adapter.submitList(it?.data?.toList())
 
         })
+    }
+
+    private fun close(){
+        requireActivity()!!
+                .supportFragmentManager
+                .beginTransaction()
+                .remove(this)
+                .commit()
     }
 }

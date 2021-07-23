@@ -16,4 +16,6 @@
     <string name="walls_title">Настенные покрытия</string>
     <string name="floors_title">Напольные покрытия</string>
 
+    <string name="select_color_header">Выберите цвет покрытия:</string>
+
 </resources>

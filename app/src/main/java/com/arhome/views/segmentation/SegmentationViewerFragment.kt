@@ -7,10 +7,12 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -20,6 +22,8 @@ import com.arhome.databinding.ImageViewerFragmentBinding
 import com.arhome.segmentation.IImageRenderer
 import com.arhome.utils.io.saveJpgImageToDCIM
 import com.arhome.views.abstractions.FragmentWithViewModel
+import com.github.chrisbanes.photoview.OnPhotoTapListener
+import com.github.chrisbanes.photoview.PhotoViewAttacher
 import kotlinx.android.synthetic.main.image_viewer_fragment.*
 import kotlinx.android.synthetic.main.image_viewer_fragment.view.*
 import java.io.File
@@ -46,24 +50,23 @@ class SegmentationViewerFragment : FragmentWithViewModel<SegmentationViewModel, 
         back_to_previous_button.setOnClickListener { findNavController().popBackStack() }
         save_image_button.setOnClickListener { saveImage() }
 
-        imageViewer.setOnTouchListener(object : View.OnTouchListener {
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+        imageViewer.setOnPhotoTapListener { image, x, y ->
+            val x = (x * image.width).toInt()
+            val y = (y * image.height).toInt()
 
-                if (v == null || event == null)
-                    return false
+            if (viewModel.data.value!!.data!!.isWall(x, y))
+                showCategory(SurfaceType.Wall)
 
-                val x = event.x.toInt()
-                val y = event.y.toInt()
+            if (viewModel.data.value!!.data!!.isFloor(x, y))
+                showCategory(SurfaceType.Floor)
+        }
 
-                if (viewModel.data.value!!.data!!.isWall(x, y))
-                    showCategory(SurfaceType.Wall)
+        requireActivity().supportFragmentManager.setFragmentResultListener("selected_color", this) { _, bundle ->
+            var color = bundle.getInt("color")
+            var surfaceString = bundle.getString("surfaceType")
 
-                if (viewModel.data.value!!.data!!.isFloor(x, y))
-                    showCategory(SurfaceType.Floor)
-
-                return false
-            }
-        })
+            changeColor(SurfaceType.valueOf(surfaceString!!), color)
+        }
 
         viewModel.defineImage(_args.filePath)
     }
@@ -71,7 +74,7 @@ class SegmentationViewerFragment : FragmentWithViewModel<SegmentationViewModel, 
     private fun saveImage() {
 
         if (!_saved) {
-            saveJpgImageToDCIM(requireContext(), File(_args.filePath))
+            saveJpgImageToDCIM(requireContext(), (imageViewer.drawable as BitmapDrawable).bitmap)
 
             _saved = true
             Toast.makeText(requireContext(), "Saved", Toast.LENGTH_SHORT).show()
@@ -89,7 +92,13 @@ class SegmentationViewerFragment : FragmentWithViewModel<SegmentationViewModel, 
                 .commit()
     }
 
-    private fun changeColor(mask: Bitmap, color: Int) {
+    private fun changeColor(surface: SurfaceType, color: Int) {
+
+        var mask: Bitmap = when (surface) {
+            SurfaceType.Floor -> viewModel.data.value!!.data!!.floorMask
+            SurfaceType.Wall -> viewModel.data.value!!.data!!.wallMask
+            else -> throw IllegalArgumentException("surface not correct")
+        }
 
         var bitmap = (imageViewer.drawable as BitmapDrawable).bitmap
         bitmap = imageRenderer.applyColor(bitmap, mask, color)

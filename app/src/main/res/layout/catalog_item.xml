@@ -38,7 +38,7 @@
             android:layout_alignBottom="@id/catalog_item_img"
             android:gravity="bottom"
             android:text="@{item.name}"
-            style="@style/ImageText">
+            style="@style/image_text">
         </TextView>
 
     </RelativeLayout>

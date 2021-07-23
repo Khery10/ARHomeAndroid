@@ -71,7 +71,6 @@
         android:name="com.arhome.views.camera.CameraFragment"
         android:label="Camera" >
 
-
         <action
             android:id="@+id/action_camera_to_jpeg_viewer"
             app:launchSingleTop="true"
@@ -103,10 +102,6 @@
             app:argType="boolean"
             android:defaultValue="false" />
 
-        <action
-            android:id="@+id/action_image_viewer_back_to_camera"
-            app:launchSingleTop="true"
-            app:destination="@id/camera_fragment" />
     </fragment>
 
 </navigation>

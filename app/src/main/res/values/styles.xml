@@ -23,27 +23,27 @@
         <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
-    <style name="MenuHeader">
+    <style name="menu_header">
         <item name="android:textSize">24sp</item>
         <item name="android:layout_marginLeft">10dp</item>
         <item name="android:layout_marginRight">10dp</item>
         <item name="android:textColor">@color/header_non_selected_header</item>
     </style>
 
-    <style name="MenuSelectedHeader">
+    <style name="menu_selected_header">
         <item name="android:textSize">24sp</item>
         <item name="android:layout_marginLeft">10dp</item>
         <item name="android:layout_marginRight">10dp</item>
         <item name="android:textColor">@color/header_selected_blue</item>
     </style>
 
-    <style name="ImageText">
+    <style name="image_text">
         <item name="android:textSize">24sp</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:layout_marginLeft">5dp</item>
     </style>
 
-    <style name="ProductsHeader">
+    <style name="products_header">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/black</item>
     </style>

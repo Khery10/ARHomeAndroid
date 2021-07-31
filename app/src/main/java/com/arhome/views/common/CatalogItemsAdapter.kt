@@ -9,6 +9,7 @@ import com.arhome.R
 import com.arhome.binding.FragmentDataBindingComponent
 import com.arhome.data.abstractions.ITitleData
 import com.arhome.databinding.CatalogItemBinding
+import com.arhome.utils.dataBound.DataBoundListAdapter
 
 class CatalogItemsAdapter(
         private val dataBindingComponent: FragmentDataBindingComponent,
@@ -17,7 +18,7 @@ class CatalogItemsAdapter(
         private val callback: ((ITitleData) -> Unit)?)
 
     : DataBoundListAdapter<ITitleData, CatalogItemBinding>(
-        appExecutors = appExecutors,
+        appExecutor = appExecutors.diskIO(),
         diffCallback = object : DiffUtil.ItemCallback<ITitleData>() {
 
             override fun areItemsTheSame(oldItem: ITitleData, newItem: ITitleData) = oldItem.id == newItem.id

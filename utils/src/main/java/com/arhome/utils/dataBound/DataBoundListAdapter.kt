@@ -1,18 +1,18 @@
-package com.arhome.views.common
+package com.arhome.utils.dataBound
 
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.arhome.AppExecutors
+import java.util.concurrent.Executor
 
 abstract class DataBoundListAdapter<T, V : ViewDataBinding>(
-        appExecutors: AppExecutors,
+        appExecutor: Executor,
         diffCallback: DiffUtil.ItemCallback<T>
 ) : ListAdapter<T, DataBoundViewHolder<V>>(
         AsyncDifferConfig.Builder<T>(diffCallback)
-                .setBackgroundThreadExecutor(appExecutors.diskIO())
+                .setBackgroundThreadExecutor(appExecutor)
                 .build()
 ) {
 

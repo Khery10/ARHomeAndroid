@@ -1,4 +1,4 @@
-package com.arhome.views.common
+package com.arhome.utils.dataBound
 
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView

@@ -68,7 +68,6 @@ class SelectingSurfaceFragment : FragmentWithViewModel<CategoriesViewModel, Sele
         binding.lifecycleOwner = viewLifecycleOwner
 
         close_button.setOnClickListener { close() }
-        select_color_button.setOnClickListener { openSelectColorDialog() }
 
         val adapter = CatalogItemsAdapter(
                 FragmentDataBindingComponent(this),
@@ -97,30 +96,6 @@ class SelectingSurfaceFragment : FragmentWithViewModel<CategoriesViewModel, Sele
                 adapter.submitList(it?.data?.toList())
 
         })
-    }
-
-    private fun openSelectColorDialog() {
-
-        var builder = ColorPickerDialog
-                .Builder(requireContext())
-                .setTitle(R.string.select_color_header)
-                .attachAlphaSlideBar(false)
-                .setPositiveButton("OK", object : ColorEnvelopeListener {
-                    override fun onColorSelected(envelope: ColorEnvelope?, fromUser: Boolean) {
-                        if (envelope != null) {
-
-                            var bundle = bundleOf(
-                                    "color" to envelope!!.color,
-                                    "surfaceType" to surfaceType.toString())
-
-                            requireActivity().supportFragmentManager.setFragmentResult("selected_color", bundle)
-                            close()
-                        }
-                    }
-                })
-
-        builder.colorPickerView.flagView = BubbleFlag(requireContext())
-        builder.show()
     }
 
     private fun close() {

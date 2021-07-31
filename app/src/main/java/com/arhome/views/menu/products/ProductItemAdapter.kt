@@ -9,7 +9,7 @@ import com.arhome.R
 import com.arhome.binding.FragmentDataBindingComponent
 import com.arhome.data.Product
 import com.arhome.databinding.ProductItemBinding
-import com.arhome.views.common.DataBoundListAdapter
+import com.arhome.utils.dataBound.DataBoundListAdapter
 
 class ProductItemAdapter(
         private val dataBindingComponent: FragmentDataBindingComponent,
@@ -17,7 +17,7 @@ class ProductItemAdapter(
         private val productImgUrlProvider: ((Product) -> String),
         private val callback: (() -> Unit)?)
     : DataBoundListAdapter<Product, ProductItemBinding>(
-        appExecutors = appExecutors,
+        appExecutor = appExecutors.diskIO(),
         diffCallback = object : DiffUtil.ItemCallback<Product>() {
 
             override fun areItemsTheSame(oldItem: Product, newItem: Product) = oldItem.id == newItem.id
